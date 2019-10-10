@@ -50,19 +50,19 @@ namespace MqttClientHelper
         #region 参数设置
         public bool EnableHeartBeat { get; set; } = true;
 
-        public string PublishTopic { get; set; } = string.Empty;
-        public string SubscribeTopic { get; set; } = string.Empty;
-        public string HeartbeatTopic { get; set; } = string.Empty;
-        public string LostPayLoadCmd { get; set; } = string.Empty;
-        public string LostPayLoadTopic { get; set; } = string.Empty;
+        public string PublishTopic { get; set; } = "PublishTopic";
+        public string SubscribeTopic { get; set; } = "SubscribeTopic";
+        public string HeartbeatTopic { get; set; } = "HeartbeatTopic";
+        public string LostPayLoadCmd { get; set; } = "LostPayLoadCmd";
+        public string LostPayLoadTopic { get; set; } = "LostPayLoadTopic";
 
         //守护线程时间间隔默认5s
         public int DaemonInterval { get; set; } = 5;
 
-        public string BrokerAddress { get; set; }
-        public int BrokerPort { get; set; }
-        public string BrokerUserName { get; set; }
-        public string BrokerPassword { get; set; }
+        public string BrokerAddress { get; set; } = "127.0.0.1";
+        public int BrokerPort { get; set; } = 61613;
+        public string BrokerUserName { get; set; } = "admin";
+        public string BrokerPassword { get; set; } = "password";
         #endregion
 
         /// <summary>
