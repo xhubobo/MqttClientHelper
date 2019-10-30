@@ -23,6 +23,8 @@ namespace MqttClientHelper
         private bool _mqttConnected;
         private readonly object _mqttConnectedLockHelper = new object();
 
+        private readonly MqttPublishHelper _publishHelper;
+
         //守护定时器
         private Timer _daemonTimer;
 
@@ -87,6 +89,9 @@ namespace MqttClientHelper
         {
             //异步连接
             Task.Run(async () => { await ConnectAsync(); });
+
+            _publishHelper.OnPublishMessage += OnPublishMessage;
+            _publishHelper.Start();
         }
 
         public void Stop()
@@ -94,6 +99,9 @@ namespace MqttClientHelper
             //移除守护定时器
             _daemonTimer?.Dispose();
             _daemonTimer = null;
+
+            _publishHelper.Stop();
+            _publishHelper.OnPublishMessage -= OnPublishMessage;
 
             try
             {
@@ -151,6 +159,11 @@ namespace MqttClientHelper
         }
 
         public void Publish(string message)
+        {
+            _publishHelper.AddMessage(message);
+        }
+
+        private void OnPublishMessage(string message)
         {
             try
             {
@@ -309,6 +322,7 @@ namespace MqttClientHelper
 
         private MqttClientManager()
         {
+            _publishHelper = new MqttPublishHelper();
         }
 
         public static MqttClientManager Instance

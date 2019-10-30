@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="MqttClientManager.cs" />
     <Compile Include="LogHelper.cs" />
+    <Compile Include="MqttPublishHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
