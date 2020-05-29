@@ -14,16 +14,12 @@ namespace RecvMessageSample
         private readonly MqttClientHelper _mqttClientHelper;
         private readonly SendMessageHelper _sendMessageHelper;
         private readonly RecvMessageHelper _recvMessageHelper;
+        private readonly MqttMsgHandler _mqttMsgHandler;
 
         private string _ip = "127.0.0.1";
         private int _port = 61613;
         private string _userName = "admin";
         private string _password = "password";
-
-//         public event Action<string> OnErrorMsg = (msg) => { };
-//         public event Action<string> OnLogMsg = (msg) => { };
-//         public event Action<string> OnPublishMsg = (msg) => { };
-//         public event Action<int> OnRecvValueMsg = (msg) => { };
 
         public RecvForm()
         {
@@ -34,9 +30,17 @@ namespace RecvMessageSample
             _mqttClientHelper = new MqttClientHelper();
             _sendMessageHelper = new SendMessageHelper();
             _recvMessageHelper = new RecvMessageHelper();
+            _mqttMsgHandler = new MqttMsgHandler();
 
-            _mqttClientHelper.OnMqttConnect += OnMqttConnect;
-            _sendMessageHelper.OnSendMessage += OnSendMessage;
+            _mqttClientHelper.OnMqttConnect += OnMqttConnect; //MQTT连接
+            _mqttClientHelper.OnMqttMessage += OnMqttMessage; //MQTT接收消息
+            _sendMessageHelper.OnSendMessage += OnSendMessage; //向MQTT发送消息
+            _recvMessageHelper.OnRecvMessage += OnRecvMessage; //接收队列消息
+            _mqttMsgHandler.OnLogMsg += OnLogMsg;
+            _mqttMsgHandler.OnErrorMsg += OnErrorMsg;
+            _mqttMsgHandler.OnPublishMsg += OnPublishMsg;
+            _mqttMsgHandler.OnRecvValueMsg += OnRecvValueMsg;
+            _mqttClientHelper.InitMqttParas();
         }
 
         private void RecvForm_Load(object sender, EventArgs e)
@@ -51,15 +55,25 @@ namespace RecvMessageSample
 
         #region MQTT
 
-        private void OnSendMessage(string message)
+        private void OnSendMessage(string msg)
         {
-            _mqttClientHelper.SendMessage(message);
+            _mqttClientHelper.SendMessage(msg);
+        }
+
+        private void OnRecvMessage(string msg)
+        {
+            _mqttMsgHandler.HandleMessage(msg);
         }
 
         private void OnMqttConnect(bool ret)
         {
             _mqttClientHelper.MqttConnected = ret;
             _syncContext.Post(OnMqttConnectSafePost, null);
+        }
+
+        private void OnMqttMessage(string msg)
+        {
+            _recvMessageHelper.HandleMessage(msg);
         }
 
         private void OnMqttConnectSafePost(object state)
@@ -99,9 +113,9 @@ namespace RecvMessageSample
             _mqttClientHelper.SendMessage(msg);
         }
 
-        private void OnRecvValueMsg(string msg)
+        private void OnRecvValueMsg(int value)
         {
-            _syncContext.Post(OnRecvValueMsgSafePost, msg);
+            _syncContext.Post(OnRecvValueMsgSafePost, value);
         }
 
         private void AddLog(object state)
@@ -113,14 +127,7 @@ namespace RecvMessageSample
 
         private void OnRecvValueMsgSafePost(object state)
         {
-            var msg = state?.ToString() ?? string.Empty;
-            int value;
-            if (!int.TryParse(msg, out value))
-            {
-                AddLog($"接收值有误：{msg}.");
-                return;
-            }
-
+            var value = (int) state;
             labelDisplay.Text = value.ToString();
         }
 

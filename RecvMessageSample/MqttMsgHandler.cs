@@ -23,22 +23,6 @@ namespace RecvMessageSample
             InitActionDic();
         }
 
-        public void InitActionDic()
-        {
-            _topicActionDic.Clear();
-            _cmdActionDic.Clear();
-
-            //Topic
-            _topicActionDic.Add(MqttClientConstants.Topic.OnLine, HandleTopicOnLine);
-            _topicActionDic.Add(MqttClientConstants.Topic.OffLine, HandleTopicOffLine);
-            _topicActionDic.Add(MqttClientConstants.Topic.Ping, HandleTopicPing);
-            _topicActionDic.Add(MqttClientConstants.Topic.LostPayLoad, HandleTopicLostPayLoad);
-            _topicActionDic.Add(MqttClientConstants.Topic.Operation, HandleTopicOperation);
-
-            //Command
-            _cmdActionDic.Add(MqttClientConstants.Cmd.SendValue, OnSendValueCmd);
-        }
-
         public void HandleMessage(string msg)
         {
             if (string.IsNullOrEmpty(msg))
@@ -77,6 +61,24 @@ namespace RecvMessageSample
             }
         }
 
+        #region InternalMethods
+
+        private void InitActionDic()
+        {
+            _topicActionDic.Clear();
+            _cmdActionDic.Clear();
+
+            //Topic
+            _topicActionDic.Add(MqttClientConstants.Topic.OnLine, HandleTopicOnLine);
+            _topicActionDic.Add(MqttClientConstants.Topic.OffLine, HandleTopicOffLine);
+            _topicActionDic.Add(MqttClientConstants.Topic.Ping, HandleTopicPing);
+            _topicActionDic.Add(MqttClientConstants.Topic.LostPayLoad, HandleTopicLostPayLoad);
+            _topicActionDic.Add(MqttClientConstants.Topic.Operation, HandleTopicOperation);
+
+            //Command
+            _cmdActionDic.Add(MqttClientConstants.Cmd.SendValue, OnSendValueCmd);
+        }
+
         private void AddErrorMsg(string msg)
         {
             OnErrorMsg?.Invoke(msg);
@@ -86,6 +88,8 @@ namespace RecvMessageSample
         {
             OnLogMsg?.Invoke(msg);
         }
+
+        #endregion
 
         #region Handle Topic
 
