@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MqttClientHelper", "MqttClientHelper\MqttClientHelper.csproj", "{F0D23183-CE5F-4D50-BE3A-0A7675BB39DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SendMessageSample", "SendMessageSample\SendMessageSample.csproj", "{F09B21D2-CAAC-4664-A7D6-2BA33EBF8860}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MqttClientModules", "MqttClientModules\MqttClientModules.csproj", "{237F4FE0-7CDC-4D6B-8C1E-7E161F154699}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{F0D23183-CE5F-4D50-BE3A-0A7675BB39DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F0D23183-CE5F-4D50-BE3A-0A7675BB39DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F0D23183-CE5F-4D50-BE3A-0A7675BB39DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F09B21D2-CAAC-4664-A7D6-2BA33EBF8860}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F09B21D2-CAAC-4664-A7D6-2BA33EBF8860}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F09B21D2-CAAC-4664-A7D6-2BA33EBF8860}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F09B21D2-CAAC-4664-A7D6-2BA33EBF8860}.Release|Any CPU.Build.0 = Release|Any CPU
+		{237F4FE0-7CDC-4D6B-8C1E-7E161F154699}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{237F4FE0-7CDC-4D6B-8C1E-7E161F154699}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{237F4FE0-7CDC-4D6B-8C1E-7E161F154699}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{237F4FE0-7CDC-4D6B-8C1E-7E161F154699}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
