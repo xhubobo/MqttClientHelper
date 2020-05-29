@@ -7,6 +7,7 @@ namespace SendMessageSample
     internal sealed class MqttClientHelper
     {
         public event Action<bool> OnMqttConnect = (ret) => { };
+        public event Action<string> OnMqttMessage = (msg) => { };
 
         #region MqttConnected
 
@@ -46,7 +47,7 @@ namespace SendMessageSample
             MqttClientManager.Instance.DaemonInterval = 5;
 
             MqttClientManager.Instance.SetConnectAction(ret => { OnMqttConnect?.Invoke(ret); });
-            //MqttClientManager.Instance.SetMessageAction(MqttTopicHandler.Instance.HandleMessage);
+            MqttClientManager.Instance.SetMessageAction(msg => { OnMqttMessage?.Invoke(msg); });
         }
 
         public void StartMqtt(string ip, int port, string userName, string password)
@@ -60,10 +61,7 @@ namespace SendMessageSample
 
         public void StopMqtt()
         {
-            //MqttTopicHandler.Instance.PublishOffLine();
             MqttClientManager.Instance.Stop();
-            //MqttClientManager.Instance.SetConnectAction(null);
-            //MqttClientManager.Instance.SetMessageAction(null);
         }
 
         public void SendMessage(string message)

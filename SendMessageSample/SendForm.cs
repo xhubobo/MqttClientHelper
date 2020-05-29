@@ -32,6 +32,7 @@ namespace SendMessageSample
             _sendMessageHelper = new SendMessageHelper();
             _mqttClientHelper.OnMqttConnect += OnMqttConnect;
             _sendMessageHelper.OnSendMessage += OnSendMessage;
+            _mqttClientHelper.InitMqttParas();
         }
 
         private void SendForm_Load(object sender, EventArgs e)
@@ -44,8 +45,6 @@ namespace SendMessageSample
             labelMqttConnState.ForeColor = Color.Black;
 
             checkBoxLoop.Checked = _loop;
-
-            _mqttClientHelper.InitMqttParas();
         }
 
         #region MQTT
@@ -135,36 +134,55 @@ namespace SendMessageSample
 
         private void buttonSend_Click(object sender, EventArgs e)
         {
-            //_sendMessageHelper.Start();
+            if (!CheckSendParas())
+            {
+                return;
+            }
+
+            _sendMessageHelper.Stop();
+            _sendMessageHelper.Start(1000 / _fps, _start, _stop);
         }
 
         private bool CheckSendParas()
         {
-            _ip = textBoxIp.Text.Trim();
-            if (string.IsNullOrEmpty(_ip))
+            _loop = checkBoxLoop.Checked;
+
+            var fps = textBoxFps.Text.Trim();
+            if (!int.TryParse(fps, out _fps))
             {
-                MessageBox.Show("请输入IP");
+                MessageBox.Show("帧率格式不正确");
                 return false;
             }
 
-            var port = textBoxPort.Text.Trim();
-            if (!int.TryParse(port, out _port))
+            if (_fps <= 0)
             {
-                MessageBox.Show("端口格式不正确");
+                MessageBox.Show("帧率必须大于0");
                 return false;
             }
 
-            _userName = textBoxUserName.Text.Trim();
-            if (string.IsNullOrEmpty(_userName))
+            var start = textBoxStartValue.Text.Trim();
+            if (!int.TryParse(start, out _start))
             {
-                MessageBox.Show("请输入UserName");
+                MessageBox.Show("开始值不正确");
                 return false;
             }
 
-            _password = textBoxPwd.Text.Trim();
-            if (string.IsNullOrEmpty(_password))
+            if (_start < 0)
             {
-                MessageBox.Show("请输入Password");
+                MessageBox.Show("开始值必须大于等于0");
+                return false;
+            }
+
+            var stop = textBoxStopValue.Text.Trim();
+            if (!int.TryParse(stop, out _stop))
+            {
+                MessageBox.Show("结束值不正确");
+                return false;
+            }
+
+            if (_stop < 0)
+            {
+                MessageBox.Show("结束值必须大于等于0");
                 return false;
             }
 

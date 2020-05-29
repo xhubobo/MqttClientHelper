@@ -93,6 +93,7 @@
             // textBoxPwd
             // 
             this.textBoxPwd.Location = new System.Drawing.Point(229, 56);
+            this.textBoxPwd.MaxLength = 20;
             this.textBoxPwd.Name = "textBoxPwd";
             this.textBoxPwd.Size = new System.Drawing.Size(100, 21);
             this.textBoxPwd.TabIndex = 1;
@@ -100,6 +101,7 @@
             // textBoxPort
             // 
             this.textBoxPort.Location = new System.Drawing.Point(45, 56);
+            this.textBoxPort.MaxLength = 10;
             this.textBoxPort.Name = "textBoxPort";
             this.textBoxPort.Size = new System.Drawing.Size(100, 21);
             this.textBoxPort.TabIndex = 1;
@@ -116,6 +118,7 @@
             // textBoxUserName
             // 
             this.textBoxUserName.Location = new System.Drawing.Point(229, 21);
+            this.textBoxUserName.MaxLength = 20;
             this.textBoxUserName.Name = "textBoxUserName";
             this.textBoxUserName.Size = new System.Drawing.Size(100, 21);
             this.textBoxUserName.TabIndex = 1;
@@ -141,6 +144,7 @@
             // textBoxIp
             // 
             this.textBoxIp.Location = new System.Drawing.Point(45, 20);
+            this.textBoxIp.MaxLength = 20;
             this.textBoxIp.Name = "textBoxIp";
             this.textBoxIp.Size = new System.Drawing.Size(100, 21);
             this.textBoxIp.TabIndex = 1;
@@ -194,6 +198,7 @@
             // textBoxFps
             // 
             this.textBoxFps.Location = new System.Drawing.Point(42, 55);
+            this.textBoxFps.MaxLength = 3;
             this.textBoxFps.Name = "textBoxFps";
             this.textBoxFps.Size = new System.Drawing.Size(100, 21);
             this.textBoxFps.TabIndex = 1;
@@ -201,6 +206,7 @@
             // textBoxStopValue
             // 
             this.textBoxStopValue.Location = new System.Drawing.Point(226, 55);
+            this.textBoxStopValue.MaxLength = 11;
             this.textBoxStopValue.Name = "textBoxStopValue";
             this.textBoxStopValue.Size = new System.Drawing.Size(100, 21);
             this.textBoxStopValue.TabIndex = 1;
@@ -208,6 +214,7 @@
             // textBoxStartValue
             // 
             this.textBoxStartValue.Location = new System.Drawing.Point(226, 23);
+            this.textBoxStartValue.MaxLength = 5;
             this.textBoxStartValue.Name = "textBoxStartValue";
             this.textBoxStartValue.Size = new System.Drawing.Size(100, 21);
             this.textBoxStartValue.TabIndex = 1;
@@ -224,7 +231,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(10, 58);
+            this.label5.Location = new System.Drawing.Point(10, 59);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(29, 12);
             this.label5.TabIndex = 0;
