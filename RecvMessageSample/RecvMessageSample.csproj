@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F09B21D2-CAAC-4664-A7D6-2BA33EBF8860}</ProjectGuid>
+    <ProjectGuid>{3AD60D78-0883-4DDB-83A6-16655EA49172}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SendMessageSample</RootNamespace>
-    <AssemblyName>SendMessageSample</AssemblyName>
+    <RootNamespace>RecvMessageSample</RootNamespace>
+    <AssemblyName>RecvMessageSample</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -35,6 +35,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Win32Console\Output\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,14 +52,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MqttClientHelper.cs" />
-    <Compile Include="SendForm.cs">
+    <Compile Include="MqttMsgHandler.cs" />
+    <Compile Include="RecvForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SendForm.Designer.cs">
-      <DependentUpon>SendForm.cs</DependentUpon>
+    <Compile Include="RecvForm.Designer.cs">
+      <DependentUpon>RecvForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecvMessageHelper.cs" />
     <Compile Include="SendMessageHelper.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -67,8 +73,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="SendForm.resx">
-      <DependentUpon>SendForm.cs</DependentUpon>
+    <EmbeddedResource Include="RecvForm.resx">
+      <DependentUpon>RecvForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
@@ -87,7 +93,7 @@
       <Name>MqttClientHelper</Name>
     </ProjectReference>
     <ProjectReference Include="..\MqttClientModules\MqttClientModules.csproj">
-      <Project>{237F4FE0-7CDC-4D6B-8C1E-7E161F154699}</Project>
+      <Project>{237f4fe0-7cdc-4d6b-8c1e-7e161f154699}</Project>
       <Name>MqttClientModules</Name>
     </ProjectReference>
   </ItemGroup>

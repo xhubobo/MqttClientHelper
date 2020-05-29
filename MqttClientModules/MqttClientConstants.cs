@@ -12,19 +12,32 @@
         public static readonly string LostPayLoadCmd = CmdType;
         public static readonly string LostPayLoadTopic = "TopicLostPayLoad";
 
-        //命令主题
-        public static readonly string CmdPing = "Ping";
-        public static readonly string CmdCloseAll = "CloseAll";
-        public static readonly string CmdExit = "Exit";
-        public static readonly string CmdOperation = "Operation";
+        //主题
+        public static class Topic
+        {
+            public static readonly string OnLine = "TopicOnLine";
+            public static readonly string OffLine = "TopicOffLine";
+            public static readonly string LostPayLoad = "TopicLostPayLoad";
+            public static readonly string Ping = "TopicPing";
+            public static readonly string Pang = "TopicPang";
+            public static readonly string Exit = "TopicExit";
+            public static readonly string Operation = "TopicOperation";
+            public static readonly string Callback = "TopicCallback";
+        }
 
-        //返回主题
-        public static readonly string TopicPang = "TopicPang";
-        public static readonly string TopicError = "TopicError";
-        public static readonly string TopicConnect = "TopicConnect";
-        public static readonly string TopicCallback = "TopicCallback";
-        public static readonly string TopicOnLine = "TopicOnLine";
-        public static readonly string TopicOffLine = "TopicOffLine";
-        public static readonly string TopicLostPayLoad = "TopicLostPayLoad";
+        public static readonly string Command = "Command";
+        public static readonly string Paras = "Paras";
+
+        public static class Cmd
+        {
+            public static readonly string SendValue = "SendValue";
+        }
+
+        public static class Para
+        {
+            public static readonly string RemoteServerName = "RemoteServerName";
+            public static readonly string Key = "Key";
+            public static readonly string Value = "Value";
+        }
     }
 }

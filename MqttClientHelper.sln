@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SendMessageSample", "SendMe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MqttClientModules", "MqttClientModules\MqttClientModules.csproj", "{237F4FE0-7CDC-4D6B-8C1E-7E161F154699}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{483039C8-9F5E-4705-AF8A-D077237023E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecvMessageSample", "RecvMessageSample\RecvMessageSample.csproj", "{3AD60D78-0883-4DDB-83A6-16655EA49172}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,8 +31,17 @@ Global
 		{237F4FE0-7CDC-4D6B-8C1E-7E161F154699}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{237F4FE0-7CDC-4D6B-8C1E-7E161F154699}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{237F4FE0-7CDC-4D6B-8C1E-7E161F154699}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AD60D78-0883-4DDB-83A6-16655EA49172}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AD60D78-0883-4DDB-83A6-16655EA49172}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AD60D78-0883-4DDB-83A6-16655EA49172}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AD60D78-0883-4DDB-83A6-16655EA49172}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F09B21D2-CAAC-4664-A7D6-2BA33EBF8860} = {483039C8-9F5E-4705-AF8A-D077237023E6}
+		{237F4FE0-7CDC-4D6B-8C1E-7E161F154699} = {483039C8-9F5E-4705-AF8A-D077237023E6}
+		{3AD60D78-0883-4DDB-83A6-16655EA49172} = {483039C8-9F5E-4705-AF8A-D077237023E6}
 	EndGlobalSection
 EndGlobal

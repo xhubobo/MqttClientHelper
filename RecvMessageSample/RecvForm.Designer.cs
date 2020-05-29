@@ -1,6 +1,6 @@
-﻿namespace SendMessageSample
+﻿namespace RecvMessageSample
 {
-    partial class SendForm
+    partial class RecvForm
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -40,14 +40,9 @@
             this.textBoxIp = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.checkBoxLoop = new System.Windows.Forms.CheckBox();
-            this.buttonSend = new System.Windows.Forms.Button();
-            this.textBoxFps = new System.Windows.Forms.TextBox();
-            this.textBoxStopValue = new System.Windows.Forms.TextBox();
-            this.textBoxStartValue = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.labelDisplay = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.listBoxLog = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -67,7 +62,7 @@
             this.groupBox1.Location = new System.Drawing.Point(10, 10);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(447, 91);
-            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "MQTT配置";
             // 
@@ -156,100 +151,54 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.checkBoxLoop);
-            this.groupBox2.Controls.Add(this.buttonSend);
-            this.groupBox2.Controls.Add(this.textBoxFps);
-            this.groupBox2.Controls.Add(this.textBoxStopValue);
-            this.groupBox2.Controls.Add(this.textBoxStartValue);
-            this.groupBox2.Controls.Add(this.label7);
+            this.groupBox2.Controls.Add(this.labelDisplay);
             this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Location = new System.Drawing.Point(13, 108);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(444, 93);
-            this.groupBox2.TabIndex = 1;
+            this.groupBox2.Size = new System.Drawing.Size(444, 145);
+            this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "发送消息";
+            this.groupBox2.Text = "接收消息";
             // 
-            // checkBoxLoop
+            // labelDisplay
             // 
-            this.checkBoxLoop.AutoSize = true;
-            this.checkBoxLoop.Location = new System.Drawing.Point(10, 25);
-            this.checkBoxLoop.Name = "checkBoxLoop";
-            this.checkBoxLoop.Size = new System.Drawing.Size(72, 16);
-            this.checkBoxLoop.TabIndex = 2;
-            this.checkBoxLoop.Text = "循环发送";
-            this.checkBoxLoop.UseVisualStyleBackColor = true;
-            // 
-            // buttonSend
-            // 
-            this.buttonSend.Location = new System.Drawing.Point(354, 26);
-            this.buttonSend.Name = "buttonSend";
-            this.buttonSend.Size = new System.Drawing.Size(75, 50);
-            this.buttonSend.TabIndex = 2;
-            this.buttonSend.Text = "Send";
-            this.buttonSend.UseVisualStyleBackColor = true;
-            this.buttonSend.Click += new System.EventHandler(this.buttonSend_Click);
-            // 
-            // textBoxFps
-            // 
-            this.textBoxFps.Location = new System.Drawing.Point(42, 55);
-            this.textBoxFps.Name = "textBoxFps";
-            this.textBoxFps.Size = new System.Drawing.Size(100, 21);
-            this.textBoxFps.TabIndex = 1;
-            // 
-            // textBoxStopValue
-            // 
-            this.textBoxStopValue.Location = new System.Drawing.Point(226, 55);
-            this.textBoxStopValue.Name = "textBoxStopValue";
-            this.textBoxStopValue.Size = new System.Drawing.Size(100, 21);
-            this.textBoxStopValue.TabIndex = 1;
-            // 
-            // textBoxStartValue
-            // 
-            this.textBoxStartValue.Location = new System.Drawing.Point(226, 23);
-            this.textBoxStartValue.Name = "textBoxStartValue";
-            this.textBoxStartValue.Size = new System.Drawing.Size(100, 21);
-            this.textBoxStartValue.TabIndex = 1;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(167, 58);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(41, 12);
-            this.label7.TabIndex = 0;
-            this.label7.Text = "结束值";
+            this.labelDisplay.AutoSize = true;
+            this.labelDisplay.Font = new System.Drawing.Font("微软雅黑", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelDisplay.Location = new System.Drawing.Point(67, 25);
+            this.labelDisplay.Name = "labelDisplay";
+            this.labelDisplay.Size = new System.Drawing.Size(55, 62);
+            this.labelDisplay.TabIndex = 1;
+            this.labelDisplay.Text = "0";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(10, 58);
+            this.label5.Location = new System.Drawing.Point(10, 25);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(29, 12);
+            this.label5.Size = new System.Drawing.Size(53, 12);
             this.label5.TabIndex = 0;
-            this.label5.Text = "帧率";
+            this.label5.Text = "接收数字";
             // 
-            // label6
+            // listBoxLog
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(167, 26);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(41, 12);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "开始值";
+            this.listBoxLog.FormattingEnabled = true;
+            this.listBoxLog.ItemHeight = 12;
+            this.listBoxLog.Location = new System.Drawing.Point(13, 265);
+            this.listBoxLog.Name = "listBoxLog";
+            this.listBoxLog.Size = new System.Drawing.Size(444, 88);
+            this.listBoxLog.TabIndex = 3;
             // 
-            // SendForm
+            // RecvForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(467, 216);
+            this.ClientSize = new System.Drawing.Size(467, 364);
+            this.Controls.Add(this.listBoxLog);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Name = "SendForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MQTT消息发送";
-            this.Load += new System.EventHandler(this.SendForm_Load);
+            this.Name = "RecvForm";
+            this.Text = "MQTT消息接收";
+            this.Load += new System.EventHandler(this.RecvForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -261,25 +210,20 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox textBoxUserName;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBoxIp;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelMqttConnState;
+        private System.Windows.Forms.Button buttonLogin;
         private System.Windows.Forms.TextBox textBoxPwd;
         private System.Windows.Forms.TextBox textBoxPort;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBoxUserName;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button buttonLogin;
-        private System.Windows.Forms.Label labelMqttConnState;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBoxIp;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.CheckBox checkBoxLoop;
-        private System.Windows.Forms.TextBox textBoxStartValue;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBoxFps;
-        private System.Windows.Forms.TextBox textBoxStopValue;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label labelDisplay;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button buttonSend;
+        private System.Windows.Forms.ListBox listBoxLog;
     }
 }
 
