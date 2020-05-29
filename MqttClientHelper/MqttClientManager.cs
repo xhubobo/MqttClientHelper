@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MQTTnet;
-using MQTTnet.Core;
-using MQTTnet.Core.Client;
-using MQTTnet.Core.Packets;
-using MQTTnet.Core.Protocol;
+using MQTTnet.Client;
+using MQTTnet.Client.Connecting;
+using MQTTnet.Client.Disconnecting;
+using MQTTnet.Client.Options;
+using MQTTnet.Client.Receiving;
+using MQTTnet.Protocol;
 using Newtonsoft.Json.Linq;
 
 namespace MqttClientHelper
@@ -50,7 +51,9 @@ namespace MqttClientHelper
         }
 
         #region 参数设置
+
         public bool EnableHeartBeat { get; set; } = true;
+        public Encoding MessageEncoding { get; set; } = Encoding.UTF8;
 
         public string PublishTopic { get; set; } = "PublishTopic";
         public string SubscribeTopic { get; set; } = "SubscribeTopic";
@@ -65,6 +68,7 @@ namespace MqttClientHelper
         public int BrokerPort { get; set; } = 61613;
         public string BrokerUserName { get; set; } = "admin";
         public string BrokerPassword { get; set; } = "password";
+
         #endregion
 
         /// <summary>
@@ -107,6 +111,7 @@ namespace MqttClientHelper
             {
                 //退出时，断开连接
                 _mqttClient?.DisconnectAsync();
+                _mqttClient?.Dispose();
                 _mqttClient = null;
             }
             catch (Exception e)
@@ -115,18 +120,24 @@ namespace MqttClientHelper
             }
         }
 
+        /// <summary>
+        /// 异步连接MQTT
+        /// </summary>
+        /// <returns></returns>
         private async Task ConnectAsync()
         {
             // create client instance
-            _mqttClient = new MqttClientFactory().CreateMqttClient() as MqttClient;
+            _mqttClient = new MqttFactory().CreateMqttClient() as MqttClient;
             if (_mqttClient == null)
             {
                 return;
             }
 
-            _mqttClient.ApplicationMessageReceived += OnMessageReceived;
-            _mqttClient.Connected += OnMqttConnected;
-            _mqttClient.Disconnected += OnMqttDisconnected;
+            _mqttClient.ApplicationMessageReceivedHandler =
+                new MqttApplicationMessageReceivedHandlerDelegate(e => { OnMessageReceived(e); });
+            _mqttClient.ConnectedHandler = new MqttClientConnectedHandlerDelegate(e => { OnMqttConnected(); });
+            _mqttClient.DisconnectedHandler =
+                new MqttClientDisconnectedHandlerDelegate(e => { OnMqttDisconnected(); });
 
             try
             {
@@ -134,20 +145,21 @@ namespace MqttClientHelper
                 {
                     [LostPayLoadCmd] = LostPayLoadTopic
                 };
-                var willMsg = new MqttApplicationMessage(PublishTopic,
-                    Encoding.UTF8.GetBytes(jObj.ToString()), MqttQualityOfServiceLevel.ExactlyOnce,
-                    false);
-
-                var options = new MqttClientTcpOptions()
+                var willMsg = new MqttApplicationMessage()
                 {
-                    Server = BrokerAddress,
-                    Port = BrokerPort,
-                    ClientId = _clientId,
-                    UserName = BrokerUserName,
-                    Password = BrokerPassword,
-                    WillMessage = willMsg,
-                    CleanSession = true
+                    Topic = PublishTopic,
+                    Payload = MessageEncoding.GetBytes(jObj.ToString()),
+                    QualityOfServiceLevel = MqttQualityOfServiceLevel.ExactlyOnce,
+                    Retain = false
                 };
+
+                var options = new MqttClientOptionsBuilder()
+                    .WithTcpServer(BrokerAddress, BrokerPort)
+                    .WithCredentials(BrokerUserName, BrokerPassword)
+                    .WithClientId(_clientId)
+                    .WithWillMessage(willMsg)
+                    .WithCleanSession()
+                    .Build();
 
                 await _mqttClient.ConnectAsync(options);
             }
@@ -167,8 +179,13 @@ namespace MqttClientHelper
         {
             try
             {
-                var msg = new MqttApplicationMessage(PublishTopic,
-                    Encoding.UTF8.GetBytes(message), MqttQualityOfServiceLevel.ExactlyOnce, false);
+                var msg = new MqttApplicationMessage()
+                {
+                    Topic = PublishTopic,
+                    Payload = MessageEncoding.GetBytes(message),
+                    QualityOfServiceLevel = MqttQualityOfServiceLevel.ExactlyOnce,
+                    Retain = false
+                };
                 _mqttClient?.PublishAsync(msg);
             }
             catch (Exception e)
@@ -180,7 +197,7 @@ namespace MqttClientHelper
         #region MQTT回调
 
         //MQTT接收信息
-        private void OnMessageReceived(object sender, MqttApplicationMessageReceivedEventArgs e)
+        private void OnMessageReceived(MqttApplicationMessageReceivedEventArgs e)
         {
             if (!SubscribeTopic.Equals(e.ApplicationMessage.Topic))
             {
@@ -188,22 +205,22 @@ namespace MqttClientHelper
             }
 
             //支持中文
-            var msg = Encoding.UTF8.GetString(e.ApplicationMessage.Payload);
+            var msg = MessageEncoding.GetString(e.ApplicationMessage.Payload);
             _msgAction?.Invoke(msg);
         }
 
         //MQTT连接成功
-        private void OnMqttConnected(object sender, EventArgs e)
+        private void OnMqttConnected()
         {
             MqttConnected = true;
 
             try
             {
                 //订阅
-                _mqttClient?.SubscribeAsync(new List<TopicFilter>
+                _mqttClient?.SubscribeAsync(new TopicFilter()
                 {
-                    new TopicFilter(SubscribeTopic,
-                        MqttQualityOfServiceLevel.ExactlyOnce)
+                    Topic = SubscribeTopic,
+                    QualityOfServiceLevel = MqttQualityOfServiceLevel.ExactlyOnce
                 });
             }
             catch (Exception ex)
@@ -222,7 +239,7 @@ namespace MqttClientHelper
         }
 
         //MQTT断开
-        private void OnMqttDisconnected(object sender, EventArgs e)
+        private void OnMqttDisconnected()
         {
             MqttConnected = false;
             _connAction?.Invoke(false);
@@ -264,8 +281,13 @@ namespace MqttClientHelper
 
             try
             {
-                var msg = new MqttApplicationMessage(HeartbeatTopic,
-                    new byte[] { 0 }, MqttQualityOfServiceLevel.AtMostOnce, false);
+                var msg = new MqttApplicationMessage()
+                {
+                    Topic = HeartbeatTopic,
+                    Payload = new byte[] {0},
+                    QualityOfServiceLevel = MqttQualityOfServiceLevel.AtMostOnce,
+                    Retain = false
+                };
                 _mqttClient?.PublishAsync(msg);
             }
             catch (Exception e)
