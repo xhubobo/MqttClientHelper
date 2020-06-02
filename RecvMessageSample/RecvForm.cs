@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using SendMessageSample;
+using MqttClientUtil;
 
 namespace RecvMessageSample
 {
@@ -12,8 +12,7 @@ namespace RecvMessageSample
         private readonly SynchronizationContext _syncContext;
 
         private readonly MqttClientHelper _mqttClientHelper;
-        private readonly SendMessageHelper _sendMessageHelper;
-        private readonly RecvMessageHelper _recvMessageHelper;
+        private readonly MessageHelper _recvMessageHelper;
         private readonly MqttMsgHandler _mqttMsgHandler;
 
         private string _ip = "127.0.0.1";
@@ -30,14 +29,12 @@ namespace RecvMessageSample
             _syncContext = SynchronizationContext.Current;
 
             _mqttClientHelper = new MqttClientHelper();
-            _sendMessageHelper = new SendMessageHelper();
-            _recvMessageHelper = new RecvMessageHelper();
+            _recvMessageHelper = new MessageHelper();
             _mqttMsgHandler = new MqttMsgHandler();
 
             _mqttClientHelper.OnMqttConnect += OnMqttConnect; //MQTT连接
             _mqttClientHelper.OnMqttMessage += OnMqttMessage; //MQTT接收消息
-            _sendMessageHelper.OnSendMessage += OnSendMessage; //向MQTT发送消息
-            _recvMessageHelper.OnRecvMessage += OnRecvMessage; //接收队列消息
+            _recvMessageHelper.OnMessage += OnRecvMessage; //接收队列消息
             _mqttMsgHandler.OnLogMsg += OnLogMsg;
             _mqttMsgHandler.OnErrorMsg += OnErrorMsg;
             _mqttMsgHandler.OnPublishMsg += OnPublishMsg;
@@ -82,7 +79,7 @@ namespace RecvMessageSample
 
         #region MQTT
 
-        private void OnSendMessage(string msg)
+        public void SendMessage(string msg)
         {
             _mqttClientHelper.SendMessage(msg);
         }
@@ -100,7 +97,7 @@ namespace RecvMessageSample
 
         private void OnMqttMessage(string msg)
         {
-            _recvMessageHelper.HandleMessage(msg);
+            _recvMessageHelper.AddMessage(msg);
         }
 
         private void OnMqttConnectSafePost(object state)

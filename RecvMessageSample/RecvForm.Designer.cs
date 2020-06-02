@@ -196,6 +196,7 @@
             this.Controls.Add(this.listBoxLog);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.MaximizeBox = false;
             this.Name = "RecvForm";
             this.Text = "MQTT消息接收";
             this.Load += new System.EventHandler(this.RecvForm_Load);
