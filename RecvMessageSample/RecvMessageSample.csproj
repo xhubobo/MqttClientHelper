@@ -58,7 +58,7 @@
       <DependentUpon>DrawForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MqttClientHelper.cs" />
-    <Compile Include="MqttMsgHandler.cs" />
+    <Compile Include="RecvMqttMsgHandler.cs" />
     <Compile Include="RecvForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,8 +67,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RecvMessageHelper.cs" />
-    <Compile Include="SendMessageHelper.cs" />
     <EmbeddedResource Include="DrawForm.resx">
       <DependentUpon>DrawForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -104,6 +102,10 @@
     <ProjectReference Include="..\MqttClientModules\MqttClientModules.csproj">
       <Project>{237f4fe0-7cdc-4d6b-8c1e-7e161f154699}</Project>
       <Name>MqttClientModules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MqttClientUtil\MqttClientUtil.csproj">
+      <Project>{de8553e5-8d28-486a-9a4d-c2021c999671}</Project>
+      <Name>MqttClientUtil</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

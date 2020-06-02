@@ -35,6 +35,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Win32Console\Output\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,6 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MqttClientHelper.cs" />
+    <Compile Include="PingInfo.cs" />
+    <Compile Include="SendMqttMsgHandler.cs" />
     <Compile Include="SendForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,6 +95,10 @@
     <ProjectReference Include="..\MqttClientModules\MqttClientModules.csproj">
       <Project>{237F4FE0-7CDC-4D6B-8C1E-7E161F154699}</Project>
       <Name>MqttClientModules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MqttClientUtil\MqttClientUtil.csproj">
+      <Project>{de8553e5-8d28-486a-9a4d-c2021c999671}</Project>
+      <Name>MqttClientUtil</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

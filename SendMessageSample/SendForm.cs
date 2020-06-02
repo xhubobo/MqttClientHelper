@@ -1,7 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using MqttClientHelper;
+using MqttClientModules;
+using MqttClientUtil;
 
 namespace SendMessageSample
 {
@@ -12,6 +17,8 @@ namespace SendMessageSample
 
         private readonly MqttClientHelper _mqttClientHelper;
         private readonly SendMessageHelper _sendMessageHelper;
+        private readonly MessageHelper _recvMessageHelper;
+        private readonly SendMqttMsgHandler _mqttMsgHandler;
 
         private string _ip = "127.0.0.1";
         private int _port = 61613;
@@ -23,16 +30,33 @@ namespace SendMessageSample
         private int _start = 0;
         private int _stop = 50 * 60 * 10;
 
+        private readonly Dictionary<string, PingInfo> _pingDic;
+
         public SendForm()
         {
             InitializeComponent();
 
+            _pingDic = new Dictionary<string, PingInfo>();
             _syncContext = SynchronizationContext.Current;
+
             _mqttClientHelper = new MqttClientHelper();
             _sendMessageHelper = new SendMessageHelper();
+            _recvMessageHelper = new MessageHelper();
+            _mqttMsgHandler = new SendMqttMsgHandler();
+
             _mqttClientHelper.OnMqttConnect += OnMqttConnect;
-            _sendMessageHelper.OnSendMessage += OnSendMessage;
-            _mqttClientHelper.InitMqttParas();
+            _mqttClientHelper.OnMqttMessage += OnMqttRecvMessage;
+            _sendMessageHelper.OnSendMessage += OnMqttSendMessage;
+            _recvMessageHelper.OnMessage += OnRecvMessage;
+            _mqttMsgHandler.OnLogMsg += OnLogMsg;
+            _mqttMsgHandler.OnErrorMsg += OnErrorMsg;
+            _mqttMsgHandler.OnPublishMsg += OnPublishMsg;
+            _mqttMsgHandler.OnPangMsg += OnPangMsg;
+
+            _mqttClientHelper.InitMqttParas(
+                MqttClientConstants.MqttClientSendTopic,
+                MqttClientConstants.MqttClientRecvTopic);
+            _recvMessageHelper.Start();
         }
 
         private void SendForm_Load(object sender, EventArgs e)
@@ -47,17 +71,36 @@ namespace SendMessageSample
             checkBoxLoop.Checked = _loop;
         }
 
-        #region MQTT
-
-        private void OnSendMessage(string message)
+        private void SendForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            _mqttClientHelper.SendMessage(message);
+            _recvMessageHelper.Stop();
         }
 
+        #region MQTT
+
+        //MQTT连接结果
         private void OnMqttConnect(bool ret)
         {
             _mqttClientHelper.MqttConnected = ret;
             _syncContext.Post(OnMqttConnectSafePost, null);
+        }
+
+        //MQTT接收消息
+        private void OnMqttRecvMessage(string msg)
+        {
+            _recvMessageHelper.AddMessage(msg);
+        }
+
+        //MQTT发送消息
+        private void OnMqttSendMessage(string message)
+        {
+            _mqttClientHelper.SendMessage(message);
+        }
+
+        //MQTT消息队列再分发
+        private void OnRecvMessage(string msg)
+        {
+            _mqttMsgHandler.HandleMessage(msg);
         }
 
         private void OnMqttConnectSafePost(object state)
@@ -79,6 +122,64 @@ namespace SendMessageSample
         }
 
         #endregion
+
+        #region RecvMessage
+
+        private void OnErrorMsg(string msg)
+        {
+            _syncContext.Post(AddLog, $"[ERR] {msg}");
+        }
+
+        private void OnLogMsg(string msg)
+        {
+            _syncContext.Post(AddLog, $"[LOG] {msg}");
+        }
+
+        private void OnPublishMsg(string msg)
+        {
+            _mqttClientHelper.SendMessage(msg);
+        }
+
+        private void OnPangMsg(string msg)
+        {
+            _syncContext.Post(OnPangMsgSafePost, msg);
+        }
+
+        private void AddLog(object state)
+        {
+            var msg = state?.ToString() ?? string.Empty;
+            var time = DateTime.Now.ToString("HH:mm:ss");
+            listBoxLog.Items.Insert(0, $"{time} {msg}");
+        }
+
+        private void OnPangMsgSafePost(object state)
+        {
+            var key = state?.ToString() ?? string.Empty;
+            if (string.IsNullOrEmpty(key))
+            {
+                AddLog("OnPangMsgSafePost para is null or empty.");
+                return;
+            }
+
+            if (!_pingDic.ContainsKey(key))
+            {
+                AddLog($"OnPangMsgSafePost undefined key {key}.");
+                return;
+            }
+
+            _pingDic[key].RecvTime = DateTime.Now;
+            _pingDic[key].Received = true;
+
+            var count = _pingDic.Where(t => t.Value.Received).ToList().Count;
+            if (count == _pingDic.Count)
+            {
+                DisplayPingInfo();
+            }
+        }
+
+        #endregion
+
+        #region 按钮事件
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
@@ -187,6 +288,42 @@ namespace SendMessageSample
             }
 
             return true;
+        }
+
+        private void buttonPing_Click(object sender, EventArgs e)
+        {
+            _pingDic.Clear();
+            labelPingResult.Text = "Ping...";
+
+            for (var i = 0; i < 10; i++)
+            {
+                var key = Guid.NewGuid().ToString();
+                _pingDic.Add(key, new PingInfo()
+                {
+                    Key = key,
+                    SendTime = DateTime.Now
+                });
+
+                _mqttMsgHandler.PublishPing(key);
+            }
+        }
+
+        #endregion
+
+        private void DisplayPingInfo()
+        {
+            var resultList = _pingDic.Values.ToList();
+            resultList.Sort((x, y) => x.Span.CompareTo(y.Span));
+
+            var min = resultList[0].Span.Milliseconds;
+            var max = resultList[resultList.Count - 1].Span.Milliseconds;
+            var avg = resultList.Sum(t => t.Span.Milliseconds) / resultList.Count;
+            labelPingResult.Text = $"min: {min}ms, max: {max}ms, avg: {avg}ms.";
+
+            foreach (var result in resultList)
+            {
+                Console.WriteLine($"span: {result.Span.Milliseconds}.");
+            }
         }
     }
 }

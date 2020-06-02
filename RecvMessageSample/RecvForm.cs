@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
+using MqttClientModules;
 using MqttClientUtil;
 
 namespace RecvMessageSample
@@ -13,7 +14,7 @@ namespace RecvMessageSample
 
         private readonly MqttClientHelper _mqttClientHelper;
         private readonly MessageHelper _recvMessageHelper;
-        private readonly MqttMsgHandler _mqttMsgHandler;
+        private readonly RecvMqttMsgHandler _mqttMsgHandler;
 
         private string _ip = "127.0.0.1";
         private int _port = 61613;
@@ -30,7 +31,7 @@ namespace RecvMessageSample
 
             _mqttClientHelper = new MqttClientHelper();
             _recvMessageHelper = new MessageHelper();
-            _mqttMsgHandler = new MqttMsgHandler();
+            _mqttMsgHandler = new RecvMqttMsgHandler();
 
             _mqttClientHelper.OnMqttConnect += OnMqttConnect; //MQTT连接
             _mqttClientHelper.OnMqttMessage += OnMqttMessage; //MQTT接收消息
@@ -39,7 +40,11 @@ namespace RecvMessageSample
             _mqttMsgHandler.OnErrorMsg += OnErrorMsg;
             _mqttMsgHandler.OnPublishMsg += OnPublishMsg;
             _mqttMsgHandler.OnRecvValueMsg += OnRecvValueMsg;
-            _mqttClientHelper.InitMqttParas();
+
+            _mqttClientHelper.InitMqttParas(
+                MqttClientConstants.MqttClientRecvTopic,
+                MqttClientConstants.MqttClientSendTopic);
+            _recvMessageHelper.Start();
         }
 
         private void RecvForm_Load(object sender, EventArgs e)
@@ -57,6 +62,11 @@ namespace RecvMessageSample
             };
             _drawForm.Show();
             AsyncDrawForm();
+        }
+
+        private void RecvForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _recvMessageHelper.Stop();
         }
 
         private void RecvForm_LocationChanged(object sender, EventArgs e)

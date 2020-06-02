@@ -199,6 +199,7 @@
             this.MaximizeBox = false;
             this.Name = "RecvForm";
             this.Text = "MQTT消息接收";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.RecvForm_FormClosed);
             this.Load += new System.EventHandler(this.RecvForm_Load);
             this.LocationChanged += new System.EventHandler(this.RecvForm_LocationChanged);
             this.groupBox1.ResumeLayout(false);

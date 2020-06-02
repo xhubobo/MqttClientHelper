@@ -48,8 +48,13 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.listBoxLog = new System.Windows.Forms.ListBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.buttonPing = new System.Windows.Forms.Button();
+            this.labelPingResult = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -168,9 +173,9 @@
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Location = new System.Drawing.Point(13, 108);
+            this.groupBox2.Location = new System.Drawing.Point(10, 108);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(444, 93);
+            this.groupBox2.Size = new System.Drawing.Size(447, 94);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "发送消息";
@@ -246,21 +251,65 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "开始值";
             // 
+            // listBoxLog
+            // 
+            this.listBoxLog.FormattingEnabled = true;
+            this.listBoxLog.ItemHeight = 12;
+            this.listBoxLog.Location = new System.Drawing.Point(10, 291);
+            this.listBoxLog.Name = "listBoxLog";
+            this.listBoxLog.Size = new System.Drawing.Size(447, 172);
+            this.listBoxLog.TabIndex = 2;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.labelPingResult);
+            this.groupBox3.Controls.Add(this.buttonPing);
+            this.groupBox3.Location = new System.Drawing.Point(10, 220);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(447, 57);
+            this.groupBox3.TabIndex = 3;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Ping测试(10次)";
+            // 
+            // buttonPing
+            // 
+            this.buttonPing.Location = new System.Drawing.Point(10, 20);
+            this.buttonPing.Name = "buttonPing";
+            this.buttonPing.Size = new System.Drawing.Size(75, 23);
+            this.buttonPing.TabIndex = 0;
+            this.buttonPing.Text = "Start";
+            this.buttonPing.UseVisualStyleBackColor = true;
+            this.buttonPing.Click += new System.EventHandler(this.buttonPing_Click);
+            // 
+            // labelPingResult
+            // 
+            this.labelPingResult.AutoSize = true;
+            this.labelPingResult.Location = new System.Drawing.Point(120, 25);
+            this.labelPingResult.Name = "labelPingResult";
+            this.labelPingResult.Size = new System.Drawing.Size(23, 12);
+            this.labelPingResult.TabIndex = 1;
+            this.labelPingResult.Text = "...";
+            // 
             // SendForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(467, 216);
+            this.ClientSize = new System.Drawing.Size(467, 475);
+            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.listBoxLog);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "SendForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MQTT消息发送";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SendForm_FormClosed);
             this.Load += new System.EventHandler(this.SendForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -287,6 +336,10 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button buttonSend;
+        private System.Windows.Forms.ListBox listBoxLog;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label labelPingResult;
+        private System.Windows.Forms.Button buttonPing;
     }
 }
 

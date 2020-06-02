@@ -34,10 +34,10 @@ namespace SendMessageSample
 
         #endregion
 
-        public void InitMqttParas()
+        public void InitMqttParas(string publishTopic, string subscribeTopic)
         {
-            MqttClientManager.Instance.PublishTopic = MqttClientConstants.MqttClientSendTopic;
-            MqttClientManager.Instance.SubscribeTopic = MqttClientConstants.MqttClientRecvTopic;
+            MqttClientManager.Instance.PublishTopic = publishTopic;
+            MqttClientManager.Instance.SubscribeTopic = subscribeTopic;
             MqttClientManager.Instance.HeartbeatTopic = MqttClientConstants.MqttClientHeartbeatTopic;
 
             MqttClientManager.Instance.LostPayLoadCmd = MqttClientConstants.LostPayLoadCmd;

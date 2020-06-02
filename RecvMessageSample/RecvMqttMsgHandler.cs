@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 
 namespace RecvMessageSample
 {
-    internal sealed class MqttMsgHandler
+    internal sealed class RecvMqttMsgHandler
     {
         public event Action<string> OnErrorMsg = (msg) => { };
         public event Action<string> OnLogMsg = (msg) => { };
@@ -15,7 +15,7 @@ namespace RecvMessageSample
         private readonly Dictionary<string, Action<string>> _topicActionDic;
         private readonly Dictionary<string, Action<string>> _cmdActionDic;
 
-        public MqttMsgHandler()
+        public RecvMqttMsgHandler()
         {
             _topicActionDic = new Dictionary<string, Action<string>>();
             _cmdActionDic = new Dictionary<string, Action<string>>();
@@ -153,6 +153,7 @@ namespace RecvMessageSample
                 JToken keyToken;
                 jObject.TryGetValue(MqttClientConstants.Para.Key, out keyToken);
                 var key = keyToken?.ToObject<string>();
+                AddLogMsg($"Received ping cmd: {key}.");
 
                 //回应
                 PublishPang(key);
