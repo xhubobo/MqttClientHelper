@@ -51,7 +51,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MqttClientHelper.cs" />
     <Compile Include="PingInfo.cs" />
     <Compile Include="SendMqttMsgHandler.cs" />
     <Compile Include="SendForm.cs">

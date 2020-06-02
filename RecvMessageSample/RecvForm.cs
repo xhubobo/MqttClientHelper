@@ -12,7 +12,7 @@ namespace RecvMessageSample
         //UI线程的同步上下文
         private readonly SynchronizationContext _syncContext;
 
-        private readonly MqttClientHelper _mqttClientHelper;
+        private readonly MqttClientUtil.MqttClientHelper _mqttClientHelper;
         private readonly MessageHelper _recvMessageHelper;
         private readonly RecvMqttMsgHandler _mqttMsgHandler;
 
@@ -29,7 +29,7 @@ namespace RecvMessageSample
 
             _syncContext = SynchronizationContext.Current;
 
-            _mqttClientHelper = new MqttClientHelper();
+            _mqttClientHelper = new MqttClientUtil.MqttClientHelper();
             _recvMessageHelper = new MessageHelper();
             _mqttMsgHandler = new RecvMqttMsgHandler();
 

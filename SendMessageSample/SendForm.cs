@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using MqttClientHelper;
 using MqttClientModules;
 using MqttClientUtil;
 
@@ -15,7 +14,7 @@ namespace SendMessageSample
         //UI线程的同步上下文
         private readonly SynchronizationContext _syncContext;
 
-        private readonly MqttClientHelper _mqttClientHelper;
+        private readonly MqttClientUtil.MqttClientHelper _mqttClientHelper;
         private readonly SendMessageHelper _sendMessageHelper;
         private readonly MessageHelper _recvMessageHelper;
         private readonly SendMqttMsgHandler _mqttMsgHandler;
@@ -39,7 +38,7 @@ namespace SendMessageSample
             _pingDic = new Dictionary<string, PingInfo>();
             _syncContext = SynchronizationContext.Current;
 
-            _mqttClientHelper = new MqttClientHelper();
+            _mqttClientHelper = new MqttClientUtil.MqttClientHelper();
             _sendMessageHelper = new SendMessageHelper();
             _recvMessageHelper = new MessageHelper();
             _mqttMsgHandler = new SendMqttMsgHandler();

@@ -2,9 +2,9 @@
 using MqttClientHelper;
 using MqttClientModules;
 
-namespace SendMessageSample
+namespace MqttClientUtil
 {
-    internal sealed class MqttClientHelper
+    public sealed class MqttClientHelper
     {
         public event Action<bool> OnMqttConnect = (ret) => { };
         public event Action<string> OnMqttMessage = (msg) => { };
