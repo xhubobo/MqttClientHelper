@@ -21,6 +21,8 @@ namespace RecvMessageSample
         private string _userName = "admin";
         private string _password = "password";
 
+        private DrawForm _drawForm;
+
         public RecvForm()
         {
             InitializeComponent();
@@ -51,6 +53,31 @@ namespace RecvMessageSample
             textBoxPwd.Text = _password;
             labelMqttConnState.Text = "MQTT未连接";
             labelMqttConnState.ForeColor = Color.Black;
+
+            _drawForm = new DrawForm
+            {
+                StartPosition = FormStartPosition.Manual
+            };
+            _drawForm.Show();
+            AsyncDrawForm();
+        }
+
+        private void RecvForm_LocationChanged(object sender, EventArgs e)
+        {
+            AsyncDrawForm();
+        }
+
+        private void AsyncDrawForm()
+        {
+            if (_drawForm == null)
+            {
+                return;
+            }
+
+            _drawForm.Width = Width;
+            _drawForm.Height = Height;
+            _drawForm.Left = Right;
+            _drawForm.Top = Top;
         }
 
         #region MQTT

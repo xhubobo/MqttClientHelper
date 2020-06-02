@@ -192,13 +192,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(467, 364);
+            this.ClientSize = new System.Drawing.Size(464, 361);
             this.Controls.Add(this.listBoxLog);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "RecvForm";
             this.Text = "MQTT消息接收";
             this.Load += new System.EventHandler(this.RecvForm_Load);
+            this.LocationChanged += new System.EventHandler(this.RecvForm_LocationChanged);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
