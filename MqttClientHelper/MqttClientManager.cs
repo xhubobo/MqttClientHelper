@@ -14,6 +14,8 @@ namespace MqttClientHelper
 {
     public sealed class MqttClientManager : IDisposable
     {
+        public event Action<string> OnErrorMessage = (msg) => { };
+
         //回调方法
         private Action<string> _msgAction;
         private Action<bool> _connAction;
@@ -116,7 +118,7 @@ namespace MqttClientHelper
             }
             catch (Exception e)
             {
-                LogHelper.AddLog(e);
+                OnErrorMessage?.Invoke(e.Message);
             }
         }
 
@@ -162,7 +164,7 @@ namespace MqttClientHelper
             catch (Exception e)
             {
                 MqttConnected = false;
-                LogHelper.AddLog(e);
+                OnErrorMessage?.Invoke(e.Message);
             }
         }
 
@@ -186,7 +188,7 @@ namespace MqttClientHelper
             }
             catch (Exception e)
             {
-                LogHelper.AddLog(e);
+                OnErrorMessage?.Invoke(e.Message);
             }
         }
 
@@ -219,9 +221,9 @@ namespace MqttClientHelper
                     QualityOfServiceLevel = MqttQualityOfServiceLevel.ExactlyOnce
                 });
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                LogHelper.AddLog(ex);
+                OnErrorMessage?.Invoke(e.Message);
             }
 
             //发送心跳数据
@@ -288,7 +290,7 @@ namespace MqttClientHelper
             }
             catch (Exception e)
             {
-                LogHelper.AddLog(e);
+                OnErrorMessage?.Invoke(e.Message);
             }
         }
 
