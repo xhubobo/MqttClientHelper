@@ -98,10 +98,10 @@ namespace RecvMessageSample
                 return;
             }
 
-            _drawForm.Width = Width;
-            _drawForm.Height = Height;
-            _drawForm.Left = Right;
-            _drawForm.Top = Top;
+            //_drawForm.Width = Width;
+            //_drawForm.Height = Height;
+            //_drawForm.Left = Right;
+            //_drawForm.Top = Top;
         }
 
         #region MQTT
