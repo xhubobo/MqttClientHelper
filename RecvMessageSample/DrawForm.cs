@@ -19,6 +19,7 @@ namespace RecvMessageSample
 
         private int _recvNumber;
         private string _imageFolder;
+        private DateTime _beginRecvTime;
 
         private int _value = -1;
         private static readonly object ValueLockHelper = new object();
@@ -51,6 +52,9 @@ namespace RecvMessageSample
 
         private void DrawForm_Load(object sender, System.EventArgs e)
         {
+            labelRecvTip.Text = string.Empty;
+            checkBoxDraw.Checked = true;
+
             DrawForm_SizeChanged(this, e);
 
             //skiaView
@@ -84,18 +88,51 @@ namespace RecvMessageSample
             _syncContext.Post(SetValueSafePost, value);
         }
 
+        public void BeginSetValue()
+        {
+            _syncContext.Post(BeginSetValueSafePost, null);
+        }
+
+        public void EndSetValue()
+        {
+            _syncContext.Post(EndSetValueSafePost, null);
+        }
+
         private void SetValueSafePost(object state)
         {
             Value = (int) state;
             labelDisplay.Text = Value.ToString();
-            _skiaView.Refresh();
+            if (checkBoxDraw.Checked)
+            {
+                _skiaView.Refresh();
+            }
+        }
+
+        private void BeginSetValueSafePost(object state)
+        {
+            _beginRecvTime = DateTime.Now;
+            var time = _beginRecvTime.ToString("HH:mm:ss fff");
+            labelRecvTip.Text = $"Recv value begin: {time}";
+        }
+
+        private void EndSetValueSafePost(object state)
+        {
+            var endRecvTime = DateTime.Now;
+            var beginTime = _beginRecvTime.ToString("HH:mm:ss fff");
+            var endTime = endRecvTime.ToString("HH:mm:ss fff");
+            var span = (endRecvTime - _beginRecvTime).TotalMilliseconds;
+            labelRecvTip.Text = $"Recv value begin: {beginTime}" +
+                                Environment.NewLine +
+                                $"Recv value end:   {endTime}" +
+                                Environment.NewLine +
+                                $"Totally costs:    {span}ms";
         }
 
         private void skiaView_PaintSurface(object sender, SKPaintSurfaceEventArgs e)
         {
             //载入底图
-            _skBitmap = SKBitmap.Decode(
-                Value < 0 ? $"{_imageFolder}/test.jpg" : $"_imageFolder/{Value % 5}.jpg");
+            var filePath = Value < 0 ? $"{_imageFolder}/test.jpg" : $"{_imageFolder}/{Value % 5}.jpg";
+            _skBitmap = SKBitmap.Decode(filePath);
 
             // the the canvas and properties
             var canvas = e.Surface.Canvas;

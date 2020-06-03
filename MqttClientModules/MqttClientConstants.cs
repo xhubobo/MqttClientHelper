@@ -29,6 +29,8 @@
         public static class Cmd
         {
             public static readonly string SendValue = "SendValue";
+            public static readonly string SendValueBegin = "SendValueBegin";
+            public static readonly string SendValueEnd = "SendValueEnd";
         }
 
         public static class Para

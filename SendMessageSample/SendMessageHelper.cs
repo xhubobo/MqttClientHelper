@@ -41,10 +41,15 @@ namespace SendMessageSample
 
         private void SendFunc(object state)
         {
-            //执行下次定时器
+            //暂停定时器
             _sendTimer?.Change(
                 Timeout.InfiniteTimeSpan,
                 Timeout.InfiniteTimeSpan);
+
+            if (_current == 0)
+            {
+                OnSendMessage?.Invoke(GetSendMessage(MqttClientConstants.Cmd.SendValueBegin));
+            }
 
             //SendMessage
             OnSendMessage?.Invoke(GetSendMessage(_current));
@@ -52,6 +57,7 @@ namespace SendMessageSample
             //校验是否发送完毕
             if (++_current >= _stop)
             {
+                OnSendMessage?.Invoke(GetSendMessage(MqttClientConstants.Cmd.SendValueEnd));
                 Stop();
                 return;
             }
@@ -60,6 +66,20 @@ namespace SendMessageSample
             _sendTimer?.Change(
                 TimeSpan.FromMilliseconds(_interval),
                 Timeout.InfiniteTimeSpan);
+        }
+
+        private static string GetSendMessage(string cmd)
+        {
+            var cmdObj = new JObject()
+            {
+                [MqttClientConstants.Command] = cmd
+            };
+            var jObj = new JObject()
+            {
+                [MqttClientConstants.CmdType] = MqttClientConstants.Topic.Operation,
+                [MqttClientConstants.Paras] = cmdObj.ToString()
+            };
+            return jObj.ToString();
         }
 
         public static string GetSendMessage(int value)

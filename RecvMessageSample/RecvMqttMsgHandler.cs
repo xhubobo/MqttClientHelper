@@ -8,6 +8,8 @@ namespace RecvMessageSample
     internal sealed class RecvMqttMsgHandler : MqttMessageHandler
     {
         public event Action<int> OnRecvValueMsg = (msg) => { };
+        public event Action OnRecvValueBeginMsg = () => { };
+        public event Action OnRecvValueEndMsg = () => { };
 
         #region InternalMethods
 
@@ -17,6 +19,8 @@ namespace RecvMessageSample
 
             //Command
             CmdActionDic.Add(MqttClientConstants.Cmd.SendValue, OnSendValueCmd);
+            CmdActionDic.Add(MqttClientConstants.Cmd.SendValueBegin, OnSendValueBeginCmd);
+            CmdActionDic.Add(MqttClientConstants.Cmd.SendValueEnd, OnSendValueEndCmd);
         }
 
         #endregion
@@ -38,6 +42,16 @@ namespace RecvMessageSample
             {
                 AddErrorMsg($"OnSendValueCmd - JSON解析失败: {paras}");
             }
+        }
+
+        private void OnSendValueBeginCmd(string paras)
+        {
+            OnRecvValueBeginMsg?.Invoke();
+        }
+
+        private void OnSendValueEndCmd(string paras)
+        {
+            OnRecvValueEndMsg?.Invoke();
         }
 
         #endregion

@@ -46,6 +46,7 @@
             this.listBoxLog = new System.Windows.Forms.ListBox();
             this.contextMenuStripLog = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemClear = new System.Windows.Forms.ToolStripMenuItem();
+            this.labelRecvTip = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.contextMenuStripLog.SuspendLayout();
@@ -155,6 +156,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.labelRecvTip);
             this.groupBox2.Controls.Add(this.labelDisplay);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Location = new System.Drawing.Point(13, 108);
@@ -198,14 +200,22 @@
             this.contextMenuStripLog.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemClear});
             this.contextMenuStripLog.Name = "contextMenuStripLog";
-            this.contextMenuStripLog.Size = new System.Drawing.Size(153, 48);
+            this.contextMenuStripLog.Size = new System.Drawing.Size(101, 26);
             // 
             // toolStripMenuItemClear
             // 
             this.toolStripMenuItemClear.Name = "toolStripMenuItemClear";
-            this.toolStripMenuItemClear.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItemClear.Size = new System.Drawing.Size(100, 22);
             this.toolStripMenuItemClear.Text = "清空";
             this.toolStripMenuItemClear.Click += new System.EventHandler(this.toolStripMenuItemClear_Click);
+            // 
+            // labelRecvTip
+            // 
+            this.labelRecvTip.Location = new System.Drawing.Point(167, 25);
+            this.labelRecvTip.Name = "labelRecvTip";
+            this.labelRecvTip.Size = new System.Drawing.Size(248, 51);
+            this.labelRecvTip.TabIndex = 3;
+            this.labelRecvTip.Text = "接收次数";
             // 
             // RecvForm
             // 
@@ -251,6 +261,7 @@
         private System.Windows.Forms.ListBox listBoxLog;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripLog;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemClear;
+        private System.Windows.Forms.Label labelRecvTip;
     }
 }
 

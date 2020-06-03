@@ -22,6 +22,7 @@ namespace RecvMessageSample
         private string _password = "password";
 
         private DrawForm _drawForm;
+        private DateTime _beginRecvTime;
 
         public RecvForm()
         {
@@ -40,6 +41,8 @@ namespace RecvMessageSample
             _mqttMsgHandler.OnErrorMsg += OnErrorMsg;
             _mqttMsgHandler.OnPublishMsg += OnPublishMsg;
             _mqttMsgHandler.OnRecvValueMsg += OnRecvValueMsg;
+            _mqttMsgHandler.OnRecvValueBeginMsg += OnRecvValueBeginMsg;
+            _mqttMsgHandler.OnRecvValueEndMsg += OnRecvValueEndMsg;
 
             _mqttClientHelper.InitMqttParas(
                 MqttClientConstants.MqttClientRecvTopic,
@@ -58,6 +61,7 @@ namespace RecvMessageSample
             textBoxPwd.Text = _password;
             labelMqttConnState.Text = "MQTT未连接";
             labelMqttConnState.ForeColor = Color.Black;
+            labelRecvTip.Text = string.Empty;
 
             _drawForm = new DrawForm
             {
@@ -171,6 +175,18 @@ namespace RecvMessageSample
             _syncContext.Post(OnRecvValueMsgSafePost, value);
         }
 
+        private void OnRecvValueBeginMsg()
+        {
+            _drawForm?.BeginSetValue();
+            _syncContext.Post(BeginSetValueSafePost, null);
+        }
+
+        private void OnRecvValueEndMsg()
+        {
+            _drawForm?.EndSetValue();
+            _syncContext.Post(EndSetValueSafePost, null);
+        }
+
         private void AddLog(object state)
         {
             var msg = state?.ToString() ?? string.Empty;
@@ -183,6 +199,26 @@ namespace RecvMessageSample
             var value = (int) state;
             labelDisplay.Text = value.ToString();
             AddLog($"RecvValue: {value}.");
+        }
+
+        private void BeginSetValueSafePost(object state)
+        {
+            _beginRecvTime = DateTime.Now;
+            var time = _beginRecvTime.ToString("HH:mm:ss fff");
+            labelRecvTip.Text = $"Recv value begin: {time}";
+        }
+
+        private void EndSetValueSafePost(object state)
+        {
+            var endRecvTime = DateTime.Now;
+            var beginTime = _beginRecvTime.ToString("HH:mm:ss fff");
+            var endTime = endRecvTime.ToString("HH:mm:ss fff");
+            var span = (endRecvTime - _beginRecvTime).TotalMilliseconds;
+            labelRecvTip.Text = $"Recv value begin: {beginTime}" +
+                                Environment.NewLine +
+                                $"Recv value end:   {endTime}" +
+                                Environment.NewLine +
+                                $"Totally costs:    {span}ms";
         }
 
         #endregion
