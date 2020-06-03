@@ -35,7 +35,7 @@
 
         public static class Para
         {
-            public static readonly string RemoteServerName = "RemoteServerName";
+            public static readonly string MachineName = "MachineName";
             public static readonly string Key = "Key";
             public static readonly string Value = "Value";
         }
