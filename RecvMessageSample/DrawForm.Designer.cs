@@ -64,13 +64,17 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(480, 400);
+            this.ClientSize = new System.Drawing.Size(464, 361);
             this.Controls.Add(this.panelDrawArea);
             this.Controls.Add(this.labelDisplay);
             this.Controls.Add(this.label5);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(480, 400);
             this.Name = "DrawForm";
             this.Text = "DrawForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DrawForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

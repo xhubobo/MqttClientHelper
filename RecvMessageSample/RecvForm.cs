@@ -167,6 +167,7 @@ namespace RecvMessageSample
 
         private void OnRecvValueMsg(int value)
         {
+            _drawForm?.SetValue(value);
             _syncContext.Post(OnRecvValueMsgSafePost, value);
         }
 
