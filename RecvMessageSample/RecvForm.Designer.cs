@@ -197,11 +197,13 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.MaximizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(480, 400);
             this.Name = "RecvForm";
             this.Text = "MQTT消息接收";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.RecvForm_FormClosed);
             this.Load += new System.EventHandler(this.RecvForm_Load);
             this.LocationChanged += new System.EventHandler(this.RecvForm_LocationChanged);
+            this.SizeChanged += new System.EventHandler(this.RecvForm_SizeChanged);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

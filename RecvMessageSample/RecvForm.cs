@@ -71,6 +71,20 @@ namespace RecvMessageSample
             _recvMessageHelper.Stop();
         }
 
+        private void RecvForm_SizeChanged(object sender, EventArgs e)
+        {
+            var width = ClientSize.Width - 20;
+            var height = ClientSize.Height - listBoxLog.Top - 10;
+
+            listBoxLog.Width = width > 0 ? width : 0;
+            listBoxLog.Height = height > 0 ? height : 0;
+            listBoxLog.Left = 10;
+
+            listBoxLog.Visible = listBoxLog.Height >= 20;
+
+            AsyncDrawForm();
+        }
+
         private void RecvForm_LocationChanged(object sender, EventArgs e)
         {
             AsyncDrawForm();

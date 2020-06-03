@@ -50,8 +50,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.listBoxLog = new System.Windows.Forms.ListBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.buttonPing = new System.Windows.Forms.Button();
             this.labelPingResult = new System.Windows.Forms.Label();
+            this.buttonPing = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -257,7 +257,7 @@
             this.listBoxLog.ItemHeight = 12;
             this.listBoxLog.Location = new System.Drawing.Point(10, 291);
             this.listBoxLog.Name = "listBoxLog";
-            this.listBoxLog.Size = new System.Drawing.Size(447, 172);
+            this.listBoxLog.Size = new System.Drawing.Size(447, 160);
             this.listBoxLog.TabIndex = 2;
             // 
             // groupBox3
@@ -271,6 +271,15 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Ping测试(10次)";
             // 
+            // labelPingResult
+            // 
+            this.labelPingResult.AutoSize = true;
+            this.labelPingResult.Location = new System.Drawing.Point(120, 25);
+            this.labelPingResult.Name = "labelPingResult";
+            this.labelPingResult.Size = new System.Drawing.Size(23, 12);
+            this.labelPingResult.TabIndex = 1;
+            this.labelPingResult.Text = "...";
+            // 
             // buttonPing
             // 
             this.buttonPing.Location = new System.Drawing.Point(10, 20);
@@ -281,29 +290,22 @@
             this.buttonPing.UseVisualStyleBackColor = true;
             this.buttonPing.Click += new System.EventHandler(this.buttonPing_Click);
             // 
-            // labelPingResult
-            // 
-            this.labelPingResult.AutoSize = true;
-            this.labelPingResult.Location = new System.Drawing.Point(120, 25);
-            this.labelPingResult.Name = "labelPingResult";
-            this.labelPingResult.Size = new System.Drawing.Size(23, 12);
-            this.labelPingResult.TabIndex = 1;
-            this.labelPingResult.Text = "...";
-            // 
             // SendForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(467, 475);
+            this.ClientSize = new System.Drawing.Size(464, 461);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.listBoxLog);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.MinimumSize = new System.Drawing.Size(480, 500);
             this.Name = "SendForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MQTT消息发送";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SendForm_FormClosed);
             this.Load += new System.EventHandler(this.SendForm_Load);
+            this.SizeChanged += new System.EventHandler(this.SendForm_SizeChanged);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
