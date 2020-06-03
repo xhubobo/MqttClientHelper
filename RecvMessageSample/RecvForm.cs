@@ -45,6 +45,7 @@ namespace RecvMessageSample
                 MqttClientConstants.MqttClientRecvTopic,
                 MqttClientConstants.MqttClientSendTopic);
             _recvMessageHelper.Start();
+            _mqttMsgHandler.Init();
         }
 
         private void RecvForm_Load(object sender, EventArgs e)
@@ -66,6 +67,7 @@ namespace RecvMessageSample
 
         private void RecvForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            _mqttMsgHandler.PublishOffLine();
             _recvMessageHelper.Stop();
         }
 
@@ -114,6 +116,7 @@ namespace RecvMessageSample
         {
             if (_mqttClientHelper.MqttConnected)
             {
+                _mqttMsgHandler.PublishOnLine();
                 labelMqttConnState.Text = "MQTT已连接";
                 labelMqttConnState.ForeColor = Color.Green;
                 buttonLogin.Text = "Logout";
@@ -182,6 +185,7 @@ namespace RecvMessageSample
             }
             else
             {
+                _mqttMsgHandler.PublishOffLine();
                 _mqttClientHelper.StopMqtt();
             }
         }

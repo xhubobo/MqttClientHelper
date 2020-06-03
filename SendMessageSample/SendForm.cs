@@ -56,6 +56,7 @@ namespace SendMessageSample
                 MqttClientConstants.MqttClientSendTopic,
                 MqttClientConstants.MqttClientRecvTopic);
             _recvMessageHelper.Start();
+            _mqttMsgHandler.Init();
         }
 
         private void SendForm_Load(object sender, EventArgs e)
@@ -72,6 +73,7 @@ namespace SendMessageSample
 
         private void SendForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            _mqttMsgHandler.PublishOffLine();
             _recvMessageHelper.Stop();
         }
 
@@ -106,6 +108,7 @@ namespace SendMessageSample
         {
             if (_mqttClientHelper.MqttConnected)
             {
+                _mqttMsgHandler.PublishOnLine();
                 labelMqttConnState.Text = "MQTT已连接";
                 labelMqttConnState.ForeColor = Color.Green;
                 buttonLogin.Text = "Logout";
@@ -195,6 +198,7 @@ namespace SendMessageSample
             }
             else
             {
+                _mqttMsgHandler.PublishOffLine();
                 _mqttClientHelper.StopMqtt();
             }
         }

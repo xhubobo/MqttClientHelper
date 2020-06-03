@@ -254,7 +254,7 @@ namespace MqttClientUtil
             OnPublishMsg?.Invoke(jsonObj.ToString());
         }
 
-        public void PublishOnLine(string key)
+        public void PublishOnLine()
         {
             var parasObj = new JObject()
             {
@@ -268,7 +268,7 @@ namespace MqttClientUtil
             OnPublishMsg?.Invoke(jsonObj.ToString());
         }
 
-        public void PublishOffLine(string key)
+        public void PublishOffLine()
         {
             var parasObj = new JObject()
             {
