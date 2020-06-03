@@ -6,6 +6,7 @@ using System.Threading;
 using System.Windows.Forms;
 using MqttClientModules;
 using MqttClientUtil;
+using SimpleLogHelper;
 
 namespace SendMessageSample
 {
@@ -44,6 +45,7 @@ namespace SendMessageSample
 
             _mqttClientHelper.OnMqttConnect += OnMqttConnect;
             _mqttClientHelper.OnMqttMessage += OnMqttRecvMessage;
+            _mqttClientHelper.OnErrorMessage += OnMqttErrorMessage; //MQTT错误消息
             _sendMessageHelper.OnSendMessage += OnMqttSendMessage;
             _recvMessageHelper.OnMessage += OnRecvMessage;
             _mqttMsgHandler.OnLogMsg += OnLogMsg;
@@ -74,11 +76,14 @@ namespace SendMessageSample
             textBoxSendValue.Text = _sendValue.ToString();
 
             checkBoxLoop.Checked = _loop;
+
+            LogHelper.InitLogPath();
         }
 
         private void SendForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             _recvMessageHelper.Stop();
+            LogHelper.Stop();
         }
 
         private void SendForm_SizeChanged(object sender, EventArgs e)
@@ -106,6 +111,11 @@ namespace SendMessageSample
         private void OnMqttRecvMessage(string msg)
         {
             _recvMessageHelper.AddMessage(msg);
+        }
+
+        private void OnMqttErrorMessage(string msg)
+        {
+            LogHelper.AddLog(msg, MsgType.Error);
         }
 
         //MQTT发送消息

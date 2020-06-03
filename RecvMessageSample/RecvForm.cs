@@ -4,6 +4,7 @@ using System.Threading;
 using System.Windows.Forms;
 using MqttClientModules;
 using MqttClientUtil;
+using SimpleLogHelper;
 
 namespace RecvMessageSample
 {
@@ -36,6 +37,7 @@ namespace RecvMessageSample
 
             _mqttClientHelper.OnMqttConnect += OnMqttConnect; //MQTT连接
             _mqttClientHelper.OnMqttMessage += OnMqttMessage; //MQTT接收消息
+            _mqttClientHelper.OnErrorMessage += OnMqttErrorMessage; //MQTT错误消息
             _recvMessageHelper.OnMessage += OnRecvMessage; //接收队列消息
             _mqttMsgHandler.OnLogMsg += OnLogMsg;
             _mqttMsgHandler.OnErrorMsg += OnErrorMsg;
@@ -56,7 +58,6 @@ namespace RecvMessageSample
         private void RecvForm_Load(object sender, EventArgs e)
         {
             LogHelper.InitLogPath();
-            LogHelper.AddLog("Start");
 
             textBoxIp.Text = _ip;
             textBoxPort.Text = _port.ToString();
@@ -133,6 +134,11 @@ namespace RecvMessageSample
         private void OnMqttMessage(string msg)
         {
             _recvMessageHelper.AddMessage(msg);
+        }
+
+        private void OnMqttErrorMessage(string msg)
+        {
+            LogHelper.AddLog(msg, MsgType.Error);
         }
 
         private void OnMqttConnectSafePost(object state)

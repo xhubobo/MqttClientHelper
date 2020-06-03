@@ -7,6 +7,7 @@ namespace MqttClientUtil
     {
         public event Action<bool> OnMqttConnect = (ret) => { };
         public event Action<string> OnMqttMessage = (msg) => { };
+        public event Action<string> OnErrorMessage = (msg) => { };
 
         #region MqttConnected
 
@@ -54,17 +55,24 @@ namespace MqttClientUtil
             MqttClientManager.Instance.BrokerPort = port;
             MqttClientManager.Instance.BrokerUserName = userName;
             MqttClientManager.Instance.BrokerPassword = password;
+            MqttClientManager.Instance.OnErrorMessage += OnMqttErrorMessage;
             MqttClientManager.Instance.Start();
         }
 
         public void StopMqtt()
         {
             MqttClientManager.Instance.Stop();
+            MqttClientManager.Instance.OnErrorMessage -= OnMqttErrorMessage;
         }
 
         public void SendMessage(string message)
         {
             MqttClientManager.Instance.Publish(message);
+        }
+
+        private void OnMqttErrorMessage(string message)
+        {
+            OnErrorMessage?.Invoke(message);
         }
     }
 }
