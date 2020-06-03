@@ -40,10 +40,10 @@
             // labelDisplay
             // 
             this.labelDisplay.AutoSize = true;
-            this.labelDisplay.Font = new System.Drawing.Font("微软雅黑", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelDisplay.Location = new System.Drawing.Point(3, 43);
+            this.labelDisplay.Font = new System.Drawing.Font("微软雅黑", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelDisplay.Location = new System.Drawing.Point(6, 43);
             this.labelDisplay.Name = "labelDisplay";
-            this.labelDisplay.Size = new System.Drawing.Size(55, 62);
+            this.labelDisplay.Size = new System.Drawing.Size(41, 46);
             this.labelDisplay.TabIndex = 3;
             this.labelDisplay.Text = "0";
             // 
@@ -76,10 +76,10 @@
             // labelRecvNumber
             // 
             this.labelRecvNumber.AutoSize = true;
-            this.labelRecvNumber.Font = new System.Drawing.Font("微软雅黑", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelRecvNumber.Location = new System.Drawing.Point(121, 43);
+            this.labelRecvNumber.Font = new System.Drawing.Font("微软雅黑", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelRecvNumber.Location = new System.Drawing.Point(124, 43);
             this.labelRecvNumber.Name = "labelRecvNumber";
-            this.labelRecvNumber.Size = new System.Drawing.Size(55, 62);
+            this.labelRecvNumber.Size = new System.Drawing.Size(41, 46);
             this.labelRecvNumber.TabIndex = 3;
             this.labelRecvNumber.Text = "0";
             // 

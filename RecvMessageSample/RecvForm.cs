@@ -55,6 +55,9 @@ namespace RecvMessageSample
 
         private void RecvForm_Load(object sender, EventArgs e)
         {
+            LogHelper.InitLogPath();
+            LogHelper.AddLog("Start");
+
             textBoxIp.Text = _ip;
             textBoxPort.Text = _port.ToString();
             textBoxUserName.Text = _userName;
@@ -74,6 +77,7 @@ namespace RecvMessageSample
         private void RecvForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             _recvMessageHelper.Stop();
+            LogHelper.Stop();
         }
 
         private void RecvForm_SizeChanged(object sender, EventArgs e)
@@ -177,12 +181,16 @@ namespace RecvMessageSample
 
         private void OnRecvValueBeginMsg()
         {
+            LogHelper.AddLog($"RecvValueBegin:\t{DateTime.Now:HH:mm:ss fff}");
+
             _drawForm?.BeginSetValue();
             _syncContext.Post(BeginSetValueSafePost, null);
         }
 
         private void OnRecvValueEndMsg()
         {
+            LogHelper.AddLog($"RecvValueEnd:\t{DateTime.Now:HH:mm:ss fff}");
+
             _drawForm?.EndSetValue();
             _syncContext.Post(EndSetValueSafePost, null);
         }

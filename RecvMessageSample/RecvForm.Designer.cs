@@ -169,10 +169,10 @@
             // labelDisplay
             // 
             this.labelDisplay.AutoSize = true;
-            this.labelDisplay.Font = new System.Drawing.Font("微软雅黑", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelDisplay.Location = new System.Drawing.Point(67, 25);
+            this.labelDisplay.Font = new System.Drawing.Font("微软雅黑", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelDisplay.Location = new System.Drawing.Point(1, 48);
             this.labelDisplay.Name = "labelDisplay";
-            this.labelDisplay.Size = new System.Drawing.Size(55, 62);
+            this.labelDisplay.Size = new System.Drawing.Size(41, 46);
             this.labelDisplay.TabIndex = 1;
             this.labelDisplay.Text = "0";
             // 

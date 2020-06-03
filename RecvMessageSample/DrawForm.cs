@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
@@ -74,7 +73,7 @@ namespace RecvMessageSample
         {
             panelDrawArea.Left = 0;
             panelDrawArea.Width = ClientSize.Width;
-            panelDrawArea.Height = (int)(ClientSize.Width / 16f * 9);
+            panelDrawArea.Height = (int) (ClientSize.Width / 16f * 9);
             panelDrawArea.Top = ClientSize.Height - panelDrawArea.Height;
         }
 
@@ -137,11 +136,8 @@ namespace RecvMessageSample
             // the the canvas and properties
             var canvas = e.Surface.Canvas;
 
-            var watch = Stopwatch.StartNew();
-            watch.Start();
+            //绘图
             DrawSkia(canvas, e.Info, _skBitmap, labelDisplay.Text);
-            watch.Stop();
-            Console.WriteLine($"DrawSkia costs {watch.ElapsedMilliseconds} ms.");
 
             if (Value >= 0)
             {

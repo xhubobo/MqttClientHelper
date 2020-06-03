@@ -91,9 +91,6 @@ namespace MqttClientHelper
 
         public void Start()
         {
-            //初始化日志位置
-            LogHelper.InitLogPath();
-
             //异步连接
             Task.Run(async () => { await ConnectAsync(); });
 
@@ -121,9 +118,6 @@ namespace MqttClientHelper
             {
                 LogHelper.AddLog(e);
             }
-
-            //停止日志
-            LogHelper.Stop();
         }
 
         /// <summary>
