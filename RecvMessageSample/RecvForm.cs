@@ -44,6 +44,7 @@ namespace RecvMessageSample
             _mqttClientHelper.InitMqttParas(
                 MqttClientConstants.MqttClientRecvTopic,
                 MqttClientConstants.MqttClientSendTopic,
+                MqttClientConstants.MqttClientHeartbeatTopic,
                 MqttMessageHandler.GetWillMessage());
             _recvMessageHelper.Start();
             _mqttMsgHandler.Init();

@@ -1,6 +1,5 @@
 ﻿using System;
 using MqttClientHelper;
-using MqttClientModules;
 
 namespace MqttClientUtil
 {
@@ -34,11 +33,12 @@ namespace MqttClientUtil
 
         #endregion
 
-        public void InitMqttParas(string publishTopic, string subscribeTopic, string willMessage)
+        public void InitMqttParas(string publishTopic, string subscribeTopic,
+            string heartbeatTopic, string willMessage)
         {
             MqttClientManager.Instance.PublishTopic = publishTopic;
             MqttClientManager.Instance.SubscribeTopic = subscribeTopic;
-            MqttClientManager.Instance.HeartbeatTopic = MqttClientConstants.MqttClientHeartbeatTopic;
+            MqttClientManager.Instance.HeartbeatTopic = heartbeatTopic;
 
             MqttClientManager.Instance.WillMessage = willMessage;
             MqttClientManager.Instance.EnableHeartBeat = false;

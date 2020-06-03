@@ -24,9 +24,9 @@ namespace SendMessageSample
         private string _userName = "admin";
         private string _password = "password";
 
-        private bool _loop = false;
+        private bool _loop;
         private int _fps = 20;
-        private int _start = 0;
+        private int _start;
         private int _stop = 50 * 60 * 10;
 
         private readonly Dictionary<string, PingInfo> _pingDic;
@@ -55,6 +55,7 @@ namespace SendMessageSample
             _mqttClientHelper.InitMqttParas(
                 MqttClientConstants.MqttClientSendTopic,
                 MqttClientConstants.MqttClientRecvTopic,
+                MqttClientConstants.MqttClientHeartbeatTopic,
                 MqttMessageHandler.GetWillMessage());
             _recvMessageHelper.Start();
             _mqttMsgHandler.Init();
