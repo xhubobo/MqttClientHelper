@@ -129,6 +129,8 @@ namespace RecvMessageSample
 
         private void skiaView_PaintSurface(object sender, SKPaintSurfaceEventArgs e)
         {
+            _skBitmap?.Dispose();
+
             //载入底图
             var filePath = Value < 0 ? $"{_imageFolder}/test.jpg" : $"{_imageFolder}/{Value % 5}.jpg";
             _skBitmap = SKBitmap.Decode(filePath);
