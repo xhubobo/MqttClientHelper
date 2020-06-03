@@ -64,6 +64,21 @@ namespace MqttClientUtil
             }
         }
 
+        //获取MQTT遗嘱信息
+        public static string GetWillMessage()
+        {
+            var parasObj = new JObject()
+            {
+                [MqttClientConstants.Para.MachineName] = Environment.MachineName
+            };
+            var jObj = new JObject()
+            {
+                [MqttClientConstants.CmdType] = MqttClientConstants.Topic.LostPayLoad,
+                [MqttClientConstants.Paras] = parasObj.ToString()
+            };
+            return jObj.ToString();
+        }
+
         #region InternalMethods
 
         protected virtual void InitActionDic()
@@ -141,7 +156,7 @@ namespace MqttClientUtil
             }
             catch (Exception)
             {
-                AddErrorMsg($"HandleTopicOffLine - JSON解析失败: {paras}");
+                AddErrorMsg($"HandleTopicLostPayLoad - JSON解析失败: {paras}");
             }
         }
 
@@ -161,7 +176,7 @@ namespace MqttClientUtil
             }
             catch (Exception)
             {
-                AddErrorMsg($"HandleTopicPang - JSON解析失败: {paras}");
+                AddErrorMsg($"HandleTopicPing - JSON解析失败: {paras}");
             }
         }
 
@@ -199,7 +214,7 @@ namespace MqttClientUtil
             }
             catch (Exception)
             {
-                AddErrorMsg($"Json解析失败: {msg}");
+                AddErrorMsg($"HandleTopicOperation Json解析失败: {msg}");
                 return;
             }
 

@@ -9,8 +9,6 @@
 
         //MqttClient配置
         public static readonly string CmdType = "MqttClientCmd";
-        public static readonly string LostPayLoadCmd = CmdType;
-        public static readonly string LostPayLoadTopic = "TopicLostPayLoad";
 
         //主题
         public static class Topic

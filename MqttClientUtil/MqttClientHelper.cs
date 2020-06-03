@@ -34,15 +34,13 @@ namespace MqttClientUtil
 
         #endregion
 
-        public void InitMqttParas(string publishTopic, string subscribeTopic)
+        public void InitMqttParas(string publishTopic, string subscribeTopic, string willMessage)
         {
             MqttClientManager.Instance.PublishTopic = publishTopic;
             MqttClientManager.Instance.SubscribeTopic = subscribeTopic;
             MqttClientManager.Instance.HeartbeatTopic = MqttClientConstants.MqttClientHeartbeatTopic;
 
-            MqttClientManager.Instance.LostPayLoadCmd = MqttClientConstants.LostPayLoadCmd;
-            MqttClientManager.Instance.LostPayLoadTopic = MqttClientConstants.LostPayLoadTopic;
-
+            MqttClientManager.Instance.WillMessage = willMessage;
             MqttClientManager.Instance.EnableHeartBeat = false;
             MqttClientManager.Instance.DaemonInterval = 5;
 

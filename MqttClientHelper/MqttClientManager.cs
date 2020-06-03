@@ -9,7 +9,6 @@ using MQTTnet.Client.Disconnecting;
 using MQTTnet.Client.Options;
 using MQTTnet.Client.Receiving;
 using MQTTnet.Protocol;
-using Newtonsoft.Json.Linq;
 
 namespace MqttClientHelper
 {
@@ -58,8 +57,6 @@ namespace MqttClientHelper
         public string PublishTopic { get; set; } = "PublishTopic";
         public string SubscribeTopic { get; set; } = "SubscribeTopic";
         public string HeartbeatTopic { get; set; } = "HeartbeatTopic";
-        public string LostPayLoadCmd { get; set; } = "LostPayLoadCmd";
-        public string LostPayLoadTopic { get; set; } = "LostPayLoadTopic";
 
         //守护线程时间间隔默认5s
         public int DaemonInterval { get; set; } = 5;
@@ -68,6 +65,9 @@ namespace MqttClientHelper
         public int BrokerPort { get; set; } = 61613;
         public string BrokerUserName { get; set; } = "admin";
         public string BrokerPassword { get; set; } = "password";
+
+        //遗嘱信息
+        public string WillMessage { get; set; }
 
         #endregion
 
@@ -147,14 +147,10 @@ namespace MqttClientHelper
 
             try
             {
-                var jObj = new JObject()
-                {
-                    [LostPayLoadCmd] = LostPayLoadTopic
-                };
                 var willMsg = new MqttApplicationMessage()
                 {
                     Topic = PublishTopic,
-                    Payload = MessageEncoding.GetBytes(jObj.ToString()),
+                    Payload = MessageEncoding.GetBytes(WillMessage ?? string.Empty),
                     QualityOfServiceLevel = MqttQualityOfServiceLevel.ExactlyOnce,
                     Retain = false
                 };
