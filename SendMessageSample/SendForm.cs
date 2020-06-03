@@ -26,8 +26,7 @@ namespace SendMessageSample
 
         private bool _loop;
         private int _fps = 20;
-        private int _start;
-        private int _stop = 50 * 60 * 10;
+        private int _sendValue = 50;
 
         private readonly Dictionary<string, PingInfo> _pingDic;
 
@@ -69,6 +68,10 @@ namespace SendMessageSample
             textBoxPwd.Text = _password;
             labelMqttConnState.Text = "MQTT未连接";
             labelMqttConnState.ForeColor = Color.Black;
+
+            checkBoxLoop.Checked = _loop;
+            textBoxFps.Text = _fps.ToString();
+            textBoxSendValue.Text = _sendValue.ToString();
 
             checkBoxLoop.Checked = _loop;
         }
@@ -256,16 +259,22 @@ namespace SendMessageSample
                 return;
             }
 
-            _sendMessageHelper.Stop();
-            _sendMessageHelper.Start(1000 / _fps, _start, _stop);
+            if (_loop)
+            {
+                _sendMessageHelper.Stop();
+                _sendMessageHelper.Start(1000 / _fps, _sendValue);
+            }
+            else
+            {
+                _mqttClientHelper.SendMessage(SendMessageHelper.GetSendMessage(_sendValue));
+            }
         }
 
         private bool CheckSendParas()
         {
             _loop = checkBoxLoop.Checked;
-
-            var fps = textBoxFps.Text.Trim();
-            if (!int.TryParse(fps, out _fps))
+            
+            if (!int.TryParse(textBoxFps.Text.Trim(), out _fps))
             {
                 MessageBox.Show("帧率格式不正确");
                 return false;
@@ -276,30 +285,16 @@ namespace SendMessageSample
                 MessageBox.Show("帧率必须大于0");
                 return false;
             }
-
-            var start = textBoxStartValue.Text.Trim();
-            if (!int.TryParse(start, out _start))
+            
+            if (!int.TryParse(textBoxSendValue.Text.Trim(), out _sendValue))
             {
-                MessageBox.Show("开始值不正确");
+                MessageBox.Show("发送数值不正确");
                 return false;
             }
 
-            if (_start < 0)
+            if (_sendValue < 0)
             {
-                MessageBox.Show("开始值必须大于等于0");
-                return false;
-            }
-
-            var stop = textBoxStopValue.Text.Trim();
-            if (!int.TryParse(stop, out _stop))
-            {
-                MessageBox.Show("结束值不正确");
-                return false;
-            }
-
-            if (_stop < 0)
-            {
-                MessageBox.Show("结束值必须大于等于0");
+                MessageBox.Show("发送数值必须大于等于0");
                 return false;
             }
 

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Threading;
+using MqttClientModules;
+using Newtonsoft.Json.Linq;
 
 namespace SendMessageSample
 {
@@ -14,16 +16,16 @@ namespace SendMessageSample
         private int _stop;
         private int _current;
 
-        public void Start(int interval, int start, int stop)
+        public void Start(int interval, int sendValue)
         {
-            if (start > stop)
+            if (sendValue < 0)
             {
                 return;
             }
 
             _interval = interval;
-            _current = start;
-            _stop = stop;
+            _current = 0;
+            _stop = sendValue;
 
             //创建定时器，interval毫秒后执行
             _sendTimer = new Timer(SendFunc, null,
@@ -39,11 +41,16 @@ namespace SendMessageSample
 
         private void SendFunc(object state)
         {
+            //执行下次定时器
+            _sendTimer?.Change(
+                Timeout.InfiniteTimeSpan,
+                Timeout.InfiniteTimeSpan);
+
             //SendMessage
-            OnSendMessage?.Invoke(_current.ToString());
+            OnSendMessage?.Invoke(GetSendMessage(_current));
 
             //校验是否发送完毕
-            if (++_current > _stop)
+            if (++_current >= _stop)
             {
                 Stop();
                 return;
@@ -51,8 +58,27 @@ namespace SendMessageSample
 
             //执行下次定时器
             _sendTimer?.Change(
-                TimeSpan.FromSeconds(_interval),
+                TimeSpan.FromMilliseconds(_interval),
                 Timeout.InfiniteTimeSpan);
+        }
+
+        public static string GetSendMessage(int value)
+        {
+            var parasObj = new JObject()
+            {
+                [MqttClientConstants.Para.Value] = value
+            };
+            var cmdObj = new JObject()
+            {
+                [MqttClientConstants.Command] = MqttClientConstants.Cmd.SendValue,
+                [MqttClientConstants.Paras] = parasObj.ToString()
+            };
+            var jObj = new JObject()
+            {
+                [MqttClientConstants.CmdType] = MqttClientConstants.Topic.Operation,
+                [MqttClientConstants.Paras] = cmdObj.ToString()
+            };
+            return jObj.ToString();
         }
     }
 }

@@ -44,11 +44,9 @@
             this.checkBoxLoop = new System.Windows.Forms.CheckBox();
             this.buttonSend = new System.Windows.Forms.Button();
             this.textBoxFps = new System.Windows.Forms.TextBox();
-            this.textBoxStopValue = new System.Windows.Forms.TextBox();
-            this.textBoxStartValue = new System.Windows.Forms.TextBox();
+            this.textBoxSendValue = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.listBoxLog = new System.Windows.Forms.ListBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.labelPingResult = new System.Windows.Forms.Label();
@@ -172,14 +170,12 @@
             this.groupBox2.Controls.Add(this.checkBoxLoop);
             this.groupBox2.Controls.Add(this.buttonSend);
             this.groupBox2.Controls.Add(this.textBoxFps);
-            this.groupBox2.Controls.Add(this.textBoxStopValue);
-            this.groupBox2.Controls.Add(this.textBoxStartValue);
+            this.groupBox2.Controls.Add(this.textBoxSendValue);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Location = new System.Drawing.Point(10, 108);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(447, 94);
+            this.groupBox2.Size = new System.Drawing.Size(447, 67);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "发送消息";
@@ -196,9 +192,9 @@
             // 
             // buttonSend
             // 
-            this.buttonSend.Location = new System.Drawing.Point(354, 26);
+            this.buttonSend.Location = new System.Drawing.Point(357, 24);
             this.buttonSend.Name = "buttonSend";
-            this.buttonSend.Size = new System.Drawing.Size(75, 50);
+            this.buttonSend.Size = new System.Drawing.Size(75, 23);
             this.buttonSend.TabIndex = 2;
             this.buttonSend.Text = "Send";
             this.buttonSend.UseVisualStyleBackColor = true;
@@ -206,62 +202,45 @@
             // 
             // textBoxFps
             // 
-            this.textBoxFps.Location = new System.Drawing.Point(42, 55);
+            this.textBoxFps.Location = new System.Drawing.Point(124, 23);
             this.textBoxFps.MaxLength = 3;
             this.textBoxFps.Name = "textBoxFps";
-            this.textBoxFps.Size = new System.Drawing.Size(100, 21);
+            this.textBoxFps.Size = new System.Drawing.Size(40, 21);
             this.textBoxFps.TabIndex = 1;
             // 
-            // textBoxStopValue
+            // textBoxSendValue
             // 
-            this.textBoxStopValue.Location = new System.Drawing.Point(226, 55);
-            this.textBoxStopValue.MaxLength = 11;
-            this.textBoxStopValue.Name = "textBoxStopValue";
-            this.textBoxStopValue.Size = new System.Drawing.Size(100, 21);
-            this.textBoxStopValue.TabIndex = 1;
-            // 
-            // textBoxStartValue
-            // 
-            this.textBoxStartValue.Location = new System.Drawing.Point(226, 23);
-            this.textBoxStartValue.MaxLength = 5;
-            this.textBoxStartValue.Name = "textBoxStartValue";
-            this.textBoxStartValue.Size = new System.Drawing.Size(100, 21);
-            this.textBoxStartValue.TabIndex = 1;
+            this.textBoxSendValue.Location = new System.Drawing.Point(229, 23);
+            this.textBoxSendValue.MaxLength = 5;
+            this.textBoxSendValue.Name = "textBoxSendValue";
+            this.textBoxSendValue.Size = new System.Drawing.Size(100, 21);
+            this.textBoxSendValue.TabIndex = 1;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(167, 58);
+            this.label7.Location = new System.Drawing.Point(194, 27);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(41, 12);
+            this.label7.Size = new System.Drawing.Size(29, 12);
             this.label7.TabIndex = 0;
-            this.label7.Text = "结束值";
+            this.label7.Text = "数值";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(10, 59);
+            this.label5.Location = new System.Drawing.Point(92, 27);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(29, 12);
             this.label5.TabIndex = 0;
             this.label5.Text = "帧率";
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(167, 26);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(41, 12);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "开始值";
-            // 
             // listBoxLog
             // 
             this.listBoxLog.FormattingEnabled = true;
             this.listBoxLog.ItemHeight = 12;
-            this.listBoxLog.Location = new System.Drawing.Point(10, 291);
+            this.listBoxLog.Location = new System.Drawing.Point(10, 255);
             this.listBoxLog.Name = "listBoxLog";
-            this.listBoxLog.Size = new System.Drawing.Size(447, 160);
+            this.listBoxLog.Size = new System.Drawing.Size(447, 148);
             this.listBoxLog.TabIndex = 2;
             this.listBoxLog.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listBoxLog_MouseUp);
             // 
@@ -269,7 +248,7 @@
             // 
             this.groupBox3.Controls.Add(this.labelPingResult);
             this.groupBox3.Controls.Add(this.buttonPing);
-            this.groupBox3.Location = new System.Drawing.Point(10, 220);
+            this.groupBox3.Location = new System.Drawing.Point(10, 184);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(447, 57);
             this.groupBox3.TabIndex = 3;
@@ -305,7 +284,7 @@
             // toolStripMenuItemClear
             // 
             this.toolStripMenuItemClear.Name = "toolStripMenuItemClear";
-            this.toolStripMenuItemClear.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItemClear.Size = new System.Drawing.Size(100, 22);
             this.toolStripMenuItemClear.Text = "清空";
             this.toolStripMenuItemClear.Click += new System.EventHandler(this.toolStripMenuItemClear_Click);
             // 
@@ -313,12 +292,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(464, 461);
+            this.ClientSize = new System.Drawing.Size(464, 421);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.listBoxLog);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.MinimumSize = new System.Drawing.Size(480, 500);
+            this.MinimumSize = new System.Drawing.Size(480, 460);
             this.Name = "SendForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MQTT消息发送";
@@ -351,10 +330,8 @@
         private System.Windows.Forms.Label labelMqttConnState;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.CheckBox checkBoxLoop;
-        private System.Windows.Forms.TextBox textBoxStartValue;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBoxFps;
-        private System.Windows.Forms.TextBox textBoxStopValue;
+        private System.Windows.Forms.TextBox textBoxSendValue;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button buttonSend;

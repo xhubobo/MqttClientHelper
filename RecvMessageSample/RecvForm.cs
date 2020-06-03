@@ -173,7 +173,7 @@ namespace RecvMessageSample
         private void AddLog(object state)
         {
             var msg = state?.ToString() ?? string.Empty;
-            var time = DateTime.Now.ToString("HH:mm:ss");
+            var time = DateTime.Now.ToString("HH:mm:ss fff");
             listBoxLog.Items.Insert(0, $"{time} {msg}");
         }
 
@@ -181,6 +181,7 @@ namespace RecvMessageSample
         {
             var value = (int) state;
             labelDisplay.Text = value.ToString();
+            AddLog($"RecvValue: {value}.");
         }
 
         #endregion
