@@ -39,6 +39,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Win32Console\Output\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="SimpleLogHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Win32Console\Output\SimpleLogHelper.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -51,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LogHelper.cs" />
     <Compile Include="PingInfo.cs" />
     <Compile Include="SendMqttMsgHandler.cs" />
     <Compile Include="SendForm.cs">
