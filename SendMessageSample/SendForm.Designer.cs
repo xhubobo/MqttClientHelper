@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.labelMqttConnState = new System.Windows.Forms.Label();
             this.buttonLogin = new System.Windows.Forms.Button();
@@ -52,9 +53,12 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.labelPingResult = new System.Windows.Forms.Label();
             this.buttonPing = new System.Windows.Forms.Button();
+            this.contextMenuStripLog = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemClear = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.contextMenuStripLog.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -259,6 +263,7 @@
             this.listBoxLog.Name = "listBoxLog";
             this.listBoxLog.Size = new System.Drawing.Size(447, 160);
             this.listBoxLog.TabIndex = 2;
+            this.listBoxLog.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listBoxLog_MouseUp);
             // 
             // groupBox3
             // 
@@ -290,6 +295,20 @@
             this.buttonPing.UseVisualStyleBackColor = true;
             this.buttonPing.Click += new System.EventHandler(this.buttonPing_Click);
             // 
+            // contextMenuStripLog
+            // 
+            this.contextMenuStripLog.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemClear});
+            this.contextMenuStripLog.Name = "contextMenuStripLog";
+            this.contextMenuStripLog.Size = new System.Drawing.Size(101, 26);
+            // 
+            // toolStripMenuItemClear
+            // 
+            this.toolStripMenuItemClear.Name = "toolStripMenuItemClear";
+            this.toolStripMenuItemClear.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItemClear.Text = "清空";
+            this.toolStripMenuItemClear.Click += new System.EventHandler(this.toolStripMenuItemClear_Click);
+            // 
             // SendForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -312,6 +331,7 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.contextMenuStripLog.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -342,6 +362,8 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label labelPingResult;
         private System.Windows.Forms.Button buttonPing;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripLog;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemClear;
     }
 }
 

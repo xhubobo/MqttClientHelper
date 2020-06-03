@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.labelMqttConnState = new System.Windows.Forms.Label();
             this.buttonLogin = new System.Windows.Forms.Button();
@@ -43,8 +44,11 @@
             this.labelDisplay = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.listBoxLog = new System.Windows.Forms.ListBox();
+            this.contextMenuStripLog = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemClear = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.contextMenuStripLog.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -187,6 +191,21 @@
             this.listBoxLog.Name = "listBoxLog";
             this.listBoxLog.Size = new System.Drawing.Size(444, 88);
             this.listBoxLog.TabIndex = 3;
+            this.listBoxLog.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listBoxLog_MouseUp);
+            // 
+            // contextMenuStripLog
+            // 
+            this.contextMenuStripLog.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemClear});
+            this.contextMenuStripLog.Name = "contextMenuStripLog";
+            this.contextMenuStripLog.Size = new System.Drawing.Size(153, 48);
+            // 
+            // toolStripMenuItemClear
+            // 
+            this.toolStripMenuItemClear.Name = "toolStripMenuItemClear";
+            this.toolStripMenuItemClear.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItemClear.Text = "清空";
+            this.toolStripMenuItemClear.Click += new System.EventHandler(this.toolStripMenuItemClear_Click);
             // 
             // RecvForm
             // 
@@ -208,6 +227,7 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.contextMenuStripLog.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -229,6 +249,8 @@
         private System.Windows.Forms.Label labelDisplay;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ListBox listBoxLog;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripLog;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemClear;
     }
 }
 

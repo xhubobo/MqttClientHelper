@@ -36,7 +36,7 @@ namespace RecvMessageSample
             }
             catch (Exception)
             {
-                AddErrorMsg($"HandleTopicOffLine - JSON解析失败: {paras}");
+                AddErrorMsg($"OnSendValueCmd - JSON解析失败: {paras}");
             }
         }
 

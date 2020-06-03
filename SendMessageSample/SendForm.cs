@@ -54,7 +54,8 @@ namespace SendMessageSample
 
             _mqttClientHelper.InitMqttParas(
                 MqttClientConstants.MqttClientSendTopic,
-                MqttClientConstants.MqttClientRecvTopic);
+                MqttClientConstants.MqttClientRecvTopic,
+                MqttMessageHandler.GetWillMessage());
             _recvMessageHelper.Start();
             _mqttMsgHandler.Init();
         }
@@ -73,7 +74,6 @@ namespace SendMessageSample
 
         private void SendForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            _mqttMsgHandler.PublishOffLine();
             _recvMessageHelper.Stop();
         }
 
@@ -340,5 +340,22 @@ namespace SendMessageSample
                 Console.WriteLine($"span: {result.Span.Milliseconds}.");
             }
         }
+
+        #region 日志事件
+
+        private void listBoxLog_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && listBoxLog.Items.Count > 0)
+            {
+                contextMenuStripLog.Show(listBoxLog, e.Location);
+            }
+        }
+
+        private void toolStripMenuItemClear_Click(object sender, EventArgs e)
+        {
+            listBoxLog.Items.Clear();
+        }
+
+        #endregion
     }
 }

@@ -43,7 +43,8 @@ namespace RecvMessageSample
 
             _mqttClientHelper.InitMqttParas(
                 MqttClientConstants.MqttClientRecvTopic,
-                MqttClientConstants.MqttClientSendTopic);
+                MqttClientConstants.MqttClientSendTopic,
+                MqttMessageHandler.GetWillMessage());
             _recvMessageHelper.Start();
             _mqttMsgHandler.Init();
         }
@@ -67,7 +68,6 @@ namespace RecvMessageSample
 
         private void RecvForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            _mqttMsgHandler.PublishOffLine();
             _recvMessageHelper.Stop();
         }
 
@@ -184,6 +184,8 @@ namespace RecvMessageSample
 
         #endregion
 
+        #region 按钮事件
+
         private void buttonLogin_Click(object sender, EventArgs e)
         {
             if (!CheckMqttParas())
@@ -236,5 +238,24 @@ namespace RecvMessageSample
 
             return true;
         }
+
+        #endregion
+
+        #region 日志事件
+
+        private void listBoxLog_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && listBoxLog.Items.Count > 0)
+            {
+                contextMenuStripLog.Show(listBoxLog, e.Location);
+            }
+        }
+
+        private void toolStripMenuItemClear_Click(object sender, EventArgs e)
+        {
+            listBoxLog.Items.Clear();
+        }
+
+        #endregion
     }
 }
