@@ -168,9 +168,9 @@ namespace MqttClientHelper
             }
         }
 
-        public void Publish(string message)
+        public void Publish(string message, bool direct = false)
         {
-            _publishHelper.AddMessage(message);
+            _publishHelper.AddMessage(message, direct);
         }
 
         private void OnPublishMessage(string message)

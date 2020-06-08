@@ -59,12 +59,19 @@ namespace MqttClientUtil
 
         #region 消息队列操作
 
-        public void AddMessage(string msg)
+        public void AddMessage(string msg, bool direct = false)
         {
-            lock (_msgQueue)
+            if (direct)
             {
-                _msgQueue.Enqueue(msg);
-                _msgSemaphore.Release();
+                OnMessage.Invoke(msg);
+            }
+            else
+            {
+                lock (_msgQueue)
+                {
+                    _msgQueue.Enqueue(msg);
+                    _msgSemaphore.Release();
+                }
             }
         }
 
